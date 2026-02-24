@@ -52,12 +52,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
       }
     } else {
       if (isQuickMode) {
-        if (isCorrect) {
-          autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
-        } else {
-          setShowResult(true)
-          autoAdvanceTimer.current = setTimeout(advanceToNext, 800)
-        }
+        autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
       } else {
         if (currentIndex < questionCount - 1) {
           setCurrentIndex(currentIndex + 1)
