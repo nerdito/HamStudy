@@ -2,25 +2,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
   padding: 2rem;
 }
 
 .page-container h1 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #333;
 }
 
-.page-container p {
-  font-size: 1.2rem;
+.page-description {
+  font-size: 1rem;
   color: #666;
   margin-bottom: 2rem;
+  text-align: center;
+  max-width: 500px;
+}
+
+.practice-container {
+  width: 100%;
+  padding: 1rem;
 }
 
 .back-button {
   display: inline-block;
+  margin-top: 2rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;

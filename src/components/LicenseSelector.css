@@ -1,0 +1,53 @@
+.license-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.license-selector h2 {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.license-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.license-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border: 2px solid #4a90d9;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.license-button:hover {
+  background-color: #4a90d9;
+}
+
+.license-button:hover .license-name,
+.license-button:hover .license-description {
+  color: white;
+}
+
+.license-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4a90d9;
+}
+
+.license-description {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
