@@ -58,3 +58,102 @@
 .home-button:active {
   transform: scale(0.98);
 }
+
+.progress-section {
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.progress-section h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a90d9;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.recent-exams h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.exam-list {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exam-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.75fr 1.25fr;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.exam-item:last-child {
+  border-bottom: none;
+}
+
+.exam-license {
+  font-weight: 600;
+  color: #333;
+}
+
+.exam-score {
+  color: #666;
+}
+
+.exam-result {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.exam-result.passed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.exam-result.failed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.exam-date {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+}

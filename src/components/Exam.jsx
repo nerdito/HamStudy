@@ -4,7 +4,7 @@ import ExamResults from './ExamResults'
 import { useSettings } from '../context/SettingsContext'
 import './Exam.css'
 
-function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
+function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
   const { settings } = useSettings()
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -129,6 +129,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
         total={questionCount}
         questions={questions}
         answers={answers}
+        license={license}
         onRestart={handleRestart}
       />
     )

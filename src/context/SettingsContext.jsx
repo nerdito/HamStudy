@@ -9,7 +9,8 @@ const DEFAULT_SETTINGS = {
     extra: 25
   },
   quickPractice: false,
-  quickExam: false
+  quickExam: false,
+  fontSize: 'medium'
 }
 
 const MAX_QUESTIONS = {
@@ -18,15 +19,31 @@ const MAX_QUESTIONS = {
   extra: 602
 }
 
+const FONT_SIZES = {
+  small: '14px',
+  medium: '16px',
+  large: '18px',
+  xlarge: '20px'
+}
+
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem('hamStudySettings')
     return saved ? JSON.parse(saved) : DEFAULT_SETTINGS
   })
 
+  const [examHistory, setExamHistory] = useState(() => {
+    const saved = localStorage.getItem('hamStudyExamHistory')
+    return saved ? JSON.parse(saved) : []
+  })
+
   useEffect(() => {
     localStorage.setItem('hamStudySettings', JSON.stringify(settings))
   }, [settings])
+
+  useEffect(() => {
+    localStorage.setItem('hamStudyExamHistory', JSON.stringify(examHistory))
+  }, [examHistory])
 
   const updateStudyQuestions = (license, count) => {
     const max = MAX_QUESTIONS[license]
@@ -48,6 +65,27 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, quickExam: value }))
   }
 
+  const setFontSize = (value) => {
+    setSettings(prev => ({ ...prev, fontSize: value }))
+  }
+
+  const saveExamResult = (result) => {
+    const newResult = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      license: result.license,
+      correct: result.correct,
+      total: result.total,
+      percentage: Math.round((result.correct / result.total) * 100),
+      passed: (result.correct / result.total) >= 0.74
+    }
+    setExamHistory(prev => [newResult, ...prev].slice(0, 50))
+  }
+
+  const clearExamHistory = () => {
+    setExamHistory([])
+  }
+
   const resetToDefaults = () => {
     setSettings(DEFAULT_SETTINGS)
   }
@@ -58,8 +96,13 @@ export function SettingsProvider({ children }) {
       updateStudyQuestions,
       setQuickPractice,
       setQuickExam,
+      setFontSize,
+      saveExamResult,
+      examHistory,
+      clearExamHistory,
       resetToDefaults,
-      MAX_QUESTIONS
+      MAX_QUESTIONS,
+      FONT_SIZES
     }}>
       {children}
     </SettingsContext.Provider>

@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
-function ExamResults({ correct, total, questions, answers, onRestart }) {
+function ExamResults({ correct, total, questions, answers, license, onRestart }) {
+  const { saveExamResult } = useSettings()
   const [showIncorrect, setShowIncorrect] = useState(false)
   const percentage = Math.round((correct / total) * 100)
   const wrongCount = total - correct
+
+  useEffect(() => {
+    if (license) {
+      saveExamResult({ license, correct, total })
+    }
+  }, [license, correct, total, saveExamResult])
 
   const getIncorrectQuestions = () => {
     return questions

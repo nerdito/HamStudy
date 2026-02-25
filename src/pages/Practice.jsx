@@ -53,6 +53,7 @@ function Practice() {
         questions={questionPools[selectedLicense]}
         questionCount={questionCount}
         mode="practice"
+        license={selectedLicense}
         onBack={handleBack}
       />
     </div>

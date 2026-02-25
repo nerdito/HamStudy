@@ -43,6 +43,7 @@ function Study() {
         questions={questionPools[selectedLicense]}
         questionCount={questionCount}
         mode="study"
+        license={selectedLicense}
         onBack={handleBack}
       />
     </div>

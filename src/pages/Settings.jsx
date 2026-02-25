@@ -9,7 +9,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, resetToDefaults, MAX_QUESTIONS } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, resetToDefaults, MAX_QUESTIONS, FONT_SIZES } = useSettings()
 
   const handleInputChange = (license, value) => {
     const numValue = parseInt(value, 10) || 5
@@ -75,6 +75,26 @@ function Settings() {
             />
             <span className="toggle-slider"></span>
           </label>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Display Settings</h2>
+        
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Font Size</span>
+          </label>
+          <select
+            className="font-size-select"
+            value={settings.fontSize}
+            onChange={(e) => setFontSize(e.target.value)}
+          >
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="xlarge">Extra Large</option>
+          </select>
         </div>
       </div>
 
