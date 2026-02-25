@@ -98,3 +98,13 @@
   background-color: #f8d7da;
   color: #721c24;
 }
+
+.must-click-hint {
+  color: #dc3545;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #fff5f5;
+  border-radius: 6px;
+}

@@ -49,8 +49,8 @@ function Settings() {
         
         <div className="toggle-group">
           <label className="toggle-label">
-            <span>Quick Practice</span>
-            <span className="toggle-description">In Practice mode: correct answers auto-advance immediately</span>
+            <span>Quick Study</span>
+            <span className="toggle-description">In Study mode: correct answers auto-advance immediately</span>
           </label>
           <label className="toggle-switch">
             <input

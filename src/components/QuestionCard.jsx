@@ -1,6 +1,6 @@
 import './QuestionCard.css'
 
-function QuestionCard({ question, selectedAnswer, onAnswer, showResult }) {
+function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect }) {
   const getAnswerClass = (index) => {
     if (!showResult) {
       return selectedAnswer === index ? 'selected' : ''
@@ -12,6 +12,12 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult }) {
       return 'incorrect'
     }
     return ''
+  }
+
+  const handleClick = (index) => {
+    if (!showResult || mustClickCorrect) {
+      onAnswer(index)
+    }
   }
 
   return (
@@ -26,8 +32,8 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult }) {
           <button
             key={index}
             className={`answer-button ${getAnswerClass(index)}`}
-            onClick={() => !showResult && onAnswer(index)}
-            disabled={showResult}
+            onClick={() => handleClick(index)}
+            disabled={showResult && !mustClickCorrect}
           >
             <span className="answer-letter">{String.fromCharCode(65 + index)}.</span>
             <span className="answer-text">{answer}</span>
@@ -37,6 +43,11 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult }) {
       {showResult && (
         <div className={`result-indicator ${selectedAnswer === question.correct ? 'correct' : 'incorrect'}`}>
           {selectedAnswer === question.correct ? '✓ Correct!' : '✗ Incorrect'}
+        </div>
+      )}
+      {mustClickCorrect && (
+        <div className="must-click-hint">
+          Click on correct to continue
         </div>
       )}
     </div>

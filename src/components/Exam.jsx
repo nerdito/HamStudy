@@ -11,6 +11,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
   const [answers, setAnswers] = useState([])
   const [showResult, setShowResult] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
+  const [mustClickCorrect, setMustClickCorrect] = useState(false)
   const autoAdvanceTimer = useRef(null)
 
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
@@ -33,6 +34,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
     if (currentIndex < questionCount - 1) {
       setCurrentIndex(currentIndex + 1)
       setShowResult(false)
+      setMustClickCorrect(false)
     } else {
       setIsComplete(true)
     }
@@ -46,9 +48,21 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
     const isCorrect = answerIndex === currentQuestion.correct
 
     if (mode === 'study') {
+      if (mustClickCorrect) {
+        if (isCorrect) {
+          advanceToNext()
+        }
+        return
+      }
+
       setShowResult(true)
-      if (isQuickMode && isCorrect) {
-        autoAdvanceTimer.current = setTimeout(advanceToNext, 500)
+      
+      if (isCorrect) {
+        if (isQuickMode) {
+          autoAdvanceTimer.current = setTimeout(advanceToNext, 500)
+        }
+      } else {
+        setMustClickCorrect(true)
       }
     } else {
       if (isQuickMode) {
@@ -77,6 +91,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1)
       setShowResult(answers[currentIndex - 1] !== null)
+      setMustClickCorrect(false)
     }
   }
 
@@ -89,6 +104,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
     setAnswers(new Array(questionCount).fill(null))
     setCurrentIndex(0)
     setShowResult(false)
+    setMustClickCorrect(false)
     setIsComplete(false)
   }
 
@@ -137,6 +153,7 @@ function Exam({ questions: allQuestions, questionCount, mode, onBack }) {
         selectedAnswer={answers[currentIndex]}
         onAnswer={handleAnswer}
         showResult={showResult}
+        mustClickCorrect={mustClickCorrect}
       />
       
       <div className="exam-navigation">
