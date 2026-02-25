@@ -9,7 +9,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, resetToDefaults, MAX_QUESTIONS, FONT_SIZES } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES } = useSettings()
 
   const handleInputChange = (license, value) => {
     const numValue = parseInt(value, 10) || 5
@@ -96,11 +96,32 @@ function Settings() {
             <option value="xlarge">Extra Large</option>
           </select>
         </div>
+
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Show Answer</span>
+            <span className="toggle-description">In Study mode: show correct answer immediately</span>
+          </label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={settings.showAnswer}
+              onChange={(e) => setShowAnswer(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
       </div>
 
       <div className="settings-section">
         <button className="reset-button" onClick={resetToDefaults}>
           Reset to Defaults
+        </button>
+      </div>
+
+      <div className="settings-section">
+        <button className="reset-button" onClick={clearExamHistory}>
+          Clear Progress
         </button>
       </div>
 

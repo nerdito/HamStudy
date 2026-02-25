@@ -155,6 +155,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         onAnswer={handleAnswer}
         showResult={showResult}
         mustClickCorrect={mustClickCorrect}
+        showAnswer={mode === 'study' && settings.showAnswer}
       />
       
       <div className="exam-navigation">

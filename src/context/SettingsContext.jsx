@@ -10,7 +10,8 @@ const DEFAULT_SETTINGS = {
   },
   quickPractice: false,
   quickExam: false,
-  fontSize: 'medium'
+  fontSize: 'medium',
+  showAnswer: false
 }
 
 const MAX_QUESTIONS = {
@@ -69,6 +70,10 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, fontSize: value }))
   }
 
+  const setShowAnswer = (value) => {
+    setSettings(prev => ({ ...prev, showAnswer: value }))
+  }
+
   const saveExamResult = (result) => {
     const newResult = {
       id: Date.now(),
@@ -97,6 +102,7 @@ export function SettingsProvider({ children }) {
       setQuickPractice,
       setQuickExam,
       setFontSize,
+      setShowAnswer,
       saveExamResult,
       examHistory,
       clearExamHistory,
