@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { BUILD_NUMBER } from '../build-number'
 
 const SettingsContext = createContext()
 
@@ -24,7 +25,8 @@ const FONT_SIZES = {
   small: '14px',
   medium: '16px',
   large: '18px',
-  xlarge: '20px'
+  xlarge: '20px',
+  xxlarge: '24px'
 }
 
 export function SettingsProvider({ children }) {
@@ -38,14 +40,7 @@ export function SettingsProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
-  const [buildNumber, setBuildNumber] = useState('')
-
-  useEffect(() => {
-    fetch('/build-number.json')
-      .then(res => res.json())
-      .then(data => setBuildNumber(data.buildNumber || ''))
-      .catch(() => setBuildNumber(''))
-  }, [])
+  const [buildNumber] = useState(BUILD_NUMBER || '')
 
   useEffect(() => {
     localStorage.setItem('hamStudySettings', JSON.stringify(settings))

@@ -81,18 +81,40 @@
   min-width: 100px;
 }
 
-.question-input-group input {
-  width: 80px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  text-align: center;
+.question-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.question-input-group input:focus {
-  outline: none;
+.control-btn {
+  width: 48px;
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.control-btn:hover:not(:disabled) {
   border-color: #4a90d9;
+  background-color: #f5f9ff;
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.question-value {
+  min-width: 50px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .question-input-group .max-questions {

@@ -11,9 +11,17 @@ const LICENSE_NAMES = {
 function Settings() {
   const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
 
-  const handleInputChange = (license, value) => {
-    const numValue = parseInt(value, 10) || 5
-    updateStudyQuestions(license, numValue)
+  const handleDecrement = (license) => {
+    const current = settings.studyQuestions[license]
+    const newValue = Math.max(5, current - 5)
+    updateStudyQuestions(license, newValue)
+  }
+
+  const handleIncrement = (license) => {
+    const current = settings.studyQuestions[license]
+    const max = MAX_QUESTIONS[license]
+    const newValue = Math.min(max, current + 5)
+    updateStudyQuestions(license, newValue)
   }
 
   return (
@@ -31,14 +39,23 @@ function Settings() {
           {Object.keys(LICENSE_NAMES).map(license => (
             <div key={license} className="question-input-group">
               <label htmlFor={license}>{LICENSE_NAMES[license]}</label>
-              <input
-                type="number"
-                id={license}
-                value={settings.studyQuestions[license]}
-                onChange={(e) => handleInputChange(license, e.target.value)}
-                min={5}
-                max={MAX_QUESTIONS[license]}
-              />
+              <div className="question-controls">
+                <button
+                  className="control-btn"
+                  onClick={() => handleDecrement(license)}
+                  disabled={settings.studyQuestions[license] <= 5}
+                >
+                  -5
+                </button>
+                <span className="question-value">{settings.studyQuestions[license]}</span>
+                <button
+                  className="control-btn"
+                  onClick={() => handleIncrement(license)}
+                  disabled={settings.studyQuestions[license] >= MAX_QUESTIONS[license]}
+                >
+                  +5
+                </button>
+              </div>
               <span className="max-questions">/ {MAX_QUESTIONS[license]}</span>
             </div>
           ))}
@@ -95,13 +112,14 @@ function Settings() {
             <option value="medium">Medium</option>
             <option value="large">Large</option>
             <option value="xlarge">Extra Large</option>
+            <option value="xxlarge">XX Large</option>
           </select>
         </div>
 
         <div className="toggle-group">
           <label className="toggle-label">
-            <span>Show Answer</span>
-            <span className="toggle-description">In Study mode: show correct answer immediately</span>
+            <span>Show Answer in Study</span>
+            <span className="toggle-description">Show correct answer immediately after selecting</span>
           </label>
           <label className="toggle-switch">
             <input

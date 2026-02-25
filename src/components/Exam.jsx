@@ -32,6 +32,9 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
 
   const advanceToNext = () => {
     if (currentIndex < questionCount - 1) {
+      const newAnswers = [...answers]
+      newAnswers[currentIndex + 1] = null
+      setAnswers(newAnswers)
       setCurrentIndex(currentIndex + 1)
       setShowResult(false)
       setMustClickCorrect(false)

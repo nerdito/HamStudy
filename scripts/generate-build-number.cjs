@@ -38,6 +38,11 @@ function getBuildNumber() {
     path.join(__dirname, '..', 'public', 'build-number.json'),
     JSON.stringify({ buildNumber: fullBuildNumber }, null, 2)
   );
+
+  fs.writeFileSync(
+    path.join(__dirname, '..', 'src', 'build-number.js'),
+    `export const BUILD_NUMBER = '${fullBuildNumber}';\n`
+  );
 }
 
 getBuildNumber();

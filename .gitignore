@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+build-number.json
+src/build-number.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
