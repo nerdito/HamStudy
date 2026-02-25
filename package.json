@@ -6,7 +6,7 @@
   "homepage": "https://nerdito.github.io/HamStudy",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-build-number.cjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",

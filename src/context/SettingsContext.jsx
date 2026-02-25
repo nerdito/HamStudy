@@ -38,6 +38,15 @@ export function SettingsProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
+  const [buildNumber, setBuildNumber] = useState('')
+
+  useEffect(() => {
+    fetch('/build-number.json')
+      .then(res => res.json())
+      .then(data => setBuildNumber(data.buildNumber || ''))
+      .catch(() => setBuildNumber(''))
+  }, [])
+
   useEffect(() => {
     localStorage.setItem('hamStudySettings', JSON.stringify(settings))
   }, [settings])
@@ -108,7 +117,8 @@ export function SettingsProvider({ children }) {
       clearExamHistory,
       resetToDefaults,
       MAX_QUESTIONS,
-      FONT_SIZES
+      FONT_SIZES,
+      buildNumber
     }}>
       {children}
     </SettingsContext.Provider>

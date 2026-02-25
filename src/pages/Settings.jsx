@@ -9,7 +9,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
 
   const handleInputChange = (license, value) => {
     const numValue = parseInt(value, 10) || 5
@@ -19,6 +19,7 @@ function Settings() {
   return (
     <div className="page-container settings-page">
       <h1>Settings</h1>
+      {buildNumber && <p className="build-number">Build {buildNumber}</p>}
       
       <div className="settings-section">
         <h2>Study Questions per License</h2>

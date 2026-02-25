@@ -26,9 +26,10 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
     return ''
   }
 
-  const handleClick = (index) => {
+  const handleClick = (index, event) => {
     if (!showResult || mustClickCorrect) {
       onAnswer(index)
+      event.target.blur()
     }
   }
 
@@ -44,7 +45,7 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
           <button
             key={index}
             className={`answer-button ${getAnswerClass(index)}`}
-            onClick={() => handleClick(index)}
+            onClick={(e) => handleClick(index, e)}
             disabled={showResult && !mustClickCorrect}
           >
             <span className="answer-letter">{String.fromCharCode(65 + index)}.</span>
