@@ -32,9 +32,6 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
 
   const advanceToNext = () => {
     if (currentIndex < questionCount - 1) {
-      const newAnswers = [...answers]
-      newAnswers[currentIndex + 1] = null
-      setAnswers(newAnswers)
       setCurrentIndex(currentIndex + 1)
       setShowResult(false)
       setMustClickCorrect(false)
@@ -68,17 +65,14 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         setMustClickCorrect(true)
       }
     } else {
-      if (isQuickMode) {
-        autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
-      } else {
-        if (currentIndex < questionCount - 1) {
-          setAnswers(newAnswers)
-          setCurrentIndex(currentIndex + 1)
+      if (currentIndex < questionCount - 1) {
+        if (isQuickMode) {
+          autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
         } else {
-          setAnswers(newAnswers, () => {
-            setIsComplete(true)
-          })
+          setCurrentIndex(currentIndex + 1)
         }
+      } else {
+        setIsComplete(true)
       }
     }
   }
