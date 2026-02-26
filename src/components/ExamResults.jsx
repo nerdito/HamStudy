@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
 function ExamResults({ correct, total, questions, answers, license, onRestart }) {
   const { saveExamResult } = useSettings()
-  const navigate = useNavigate()
   const [showIncorrect, setShowIncorrect] = useState(false)
   const percentage = Math.round((correct / total) * 100)
   const wrongCount = total - correct
@@ -27,7 +25,7 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
   }
 
   const handleBackHome = () => {
-    navigate('/')
+    window.location.href = '/HamStudy/'
   }
 
   const incorrectQuestions = getIncorrectQuestions()
