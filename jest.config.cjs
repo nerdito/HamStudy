@@ -3,6 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^../build-number$': '<rootDir>/src/build-number.js',
   },
   transform: {
     '^.+\\.(js|jsx)$': 'babel-jest',
