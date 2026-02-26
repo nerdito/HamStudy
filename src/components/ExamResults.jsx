@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
 function ExamResults({ correct, total, questions, answers, license, onRestart }) {
   const { saveExamResult } = useSettings()
+  const navigate = useNavigate()
   const [showIncorrect, setShowIncorrect] = useState(false)
   const percentage = Math.round((correct / total) * 100)
   const wrongCount = total - correct
@@ -23,6 +24,10 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
         isIncorrect: answers[index] !== question.correct
       }))
       .filter(item => item.isIncorrect)
+  }
+
+  const handleBackHome = () => {
+    navigate('/')
   }
 
   const incorrectQuestions = getIncorrectQuestions()
@@ -80,9 +85,9 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
         <button className="restart-button" onClick={onRestart}>
           Restart
         </button>
-        <Link to="/" className="home-button">
+        <button className="home-button" onClick={handleBackHome}>
           Back Home
-        </Link>
+        </button>
       </div>
     </div>
   )
