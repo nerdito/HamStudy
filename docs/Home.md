@@ -10,6 +10,10 @@ Ham Radio Test Practice is designed to help aspiring ham radio operators prepare
 - **General** - Intermediate license  
 - **Extra** - Advanced license
 
+## Question Source
+
+Questions taken from: https://github.com/russolsen/ham_radio_question_pool
+
 ## Quick Start
 
 1. Select your license class (Technician, General, or Extra)

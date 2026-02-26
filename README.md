@@ -1,16 +1,68 @@
-# React + Vite
+# Ham Radio Test Practice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application to help you study for the Ham Radio (Amateur Radio) license exams in the United States.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ham Radio Test Practice is designed to help aspiring ham radio operators prepare for their FCC license exams. The app covers all three license classes:
 
-## React Compiler
+- **Technician** - Entry-level license
+- **General** - Intermediate license  
+- **Extra** - Advanced license
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Question Source
 
-## Expanding the ESLint configuration
+Questions taken from: https://github.com/russolsen/ham_radio_question_pool
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- **Multiple License Classes** - Study for Technician, General, or Extra licenses
+- **Two Study Modes** - Learn with instant feedback or take practice exams
+- **Progress Tracking** - Track your exam history and see your improvement over time
+- **Customizable Settings** - Adjust font size, question count, and more
+- **Responsive Design** - Works on desktop and mobile devices
+
+## Getting Started
+
+Visit the application at: **https://nerdito.github.io/HamStudy**
+
+Select your license class and begin studying today!
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run Development Server
+
+```bash
+npm run dev
+```
+
+### Run Tests
+
+```bash
+npm test
+```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Deploy
+
+The app automatically deploys to GitHub Pages when changes are pushed to main.
+
+## License
+
+This project is for educational purposes. The question pool is provided by the amateur radio community.

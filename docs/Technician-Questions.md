@@ -2,6 +2,8 @@
 
 The Technician license is the entry-level amateur radio license. 411 questions are included in the question pool.
 
+**Question Source:** Questions taken from https://github.com/russolsen/ham_radio_question_pool
+
 ## Question Bank
 
 | # | ID | Question | Correct Answer | Ref |

@@ -72,6 +72,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
       } else {
         if (currentIndex < questionCount - 1) {
+          setAnswers(newAnswers)
           setCurrentIndex(currentIndex + 1)
         } else {
           setAnswers(newAnswers, () => {
