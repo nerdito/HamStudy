@@ -74,7 +74,9 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         if (currentIndex < questionCount - 1) {
           setCurrentIndex(currentIndex + 1)
         } else {
-          setIsComplete(true)
+          setAnswers(newAnswers, () => {
+            setIsComplete(true)
+          })
         }
       }
     }
