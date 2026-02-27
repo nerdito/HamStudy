@@ -9,7 +9,7 @@
     "build": "node scripts/generate-build-number.cjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest",
+    "test": "NODE_OPTIONS='--max-old-space-size=4096' jest",
     "test:coverage": "jest --coverage",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
