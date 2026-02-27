@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
@@ -14,7 +14,7 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
     }
   }, [license, correct, total, saveExamResult])
 
-  const getIncorrectQuestions = () => {
+  const incorrectQuestions = useMemo(() => {
     return questions
       .map((question, index) => ({
         question,
@@ -22,13 +22,11 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
         isIncorrect: answers[index] !== question.correct
       }))
       .filter(item => item.isIncorrect)
-  }
+  }, [questions, answers])
 
   const handleBackHome = () => {
     window.location.href = '/HamStudy/'
   }
-
-  const incorrectQuestions = getIncorrectQuestions()
 
   return (
     <div className="exam-results">
