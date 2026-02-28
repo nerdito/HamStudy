@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { SettingsProvider } from '../context/SettingsContext';
 import ExamResults from '../components/ExamResults';
 
@@ -28,9 +29,11 @@ const mockQuestions = [
 
 const renderWithProvider = (component) => {
   return render(
-    <SettingsProvider>
-      {component}
-    </SettingsProvider>
+    <BrowserRouter>
+      <SettingsProvider>
+        {component}
+      </SettingsProvider>
+    </BrowserRouter>
   );
 };
 
