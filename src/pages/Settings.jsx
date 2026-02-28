@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
+import { getVoices, isRecognitionSupported } from '../utils/tts'
+import { useState, useEffect } from 'react'
 import './Settings.css'
 
 const LICENSE_NAMES = {
@@ -9,7 +11,33 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const [voices, setVoices] = useState([])
+  const [voicesLoaded, setVoicesLoaded] = useState(false)
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = getVoices()
+      if (availableVoices.length > 0) {
+        setVoices(availableVoices)
+        setVoicesLoaded(true)
+      }
+    }
+
+    loadVoices()
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+
+    const timer = setTimeout(() => {
+      if (!voicesLoaded) {
+        setVoices(getVoices())
+        setVoicesLoaded(true)
+      }
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleDecrement = (license) => {
     const current = settings.studyQuestions[license]
@@ -130,6 +158,95 @@ function Settings() {
             <span className="toggle-slider"></span>
           </label>
         </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Text-to-Speech Settings</h2>
+        
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Enable Text-to-Speech</span>
+            <span className="toggle-description">Show read aloud button on questions</span>
+          </label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={settings.ttsEnabled}
+              onChange={(e) => setTtsEnabled(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+
+        {settings.ttsEnabled && (
+          <>
+            <div className="toggle-group">
+              <label className="toggle-label">
+                <span>Voice</span>
+              </label>
+              <select
+                className="voice-select"
+                value={settings.ttsVoice}
+                onChange={(e) => setTtsVoice(e.target.value)}
+              >
+                <option value="">Default</option>
+                {voices.map(voice => (
+                  <option key={voice.name} value={voice.name}>
+                    {voice.name} ({voice.lang})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="toggle-group">
+              <label className="toggle-label">
+                <span>Speech Speed: {settings.ttsSpeed}x</span>
+              </label>
+              <input
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.1"
+                value={settings.ttsSpeed}
+                onChange={(e) => setTtsSpeed(parseFloat(e.target.value))}
+                className="speed-slider"
+              />
+            </div>
+
+            <div className="toggle-group">
+              <label className="toggle-label">
+                <span>Auto-read Questions</span>
+                <span className="toggle-description">Automatically read questions aloud when they appear</span>
+              </label>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.ttsAutoRead}
+                  onChange={(e) => setTtsAutoRead(e.target.checked)}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+
+            {isRecognitionSupported() && (
+              <div className="toggle-group">
+                <label className="toggle-label">
+                  <span>Voice Answer Mode</span>
+                  <span className="toggle-description">Allow answering questions with your voice</span>
+                </label>
+                <select
+                  className="listening-select"
+                  value={settings.listeningMode}
+                  onChange={(e) => setListeningMode(e.target.value)}
+                >
+                  <option value="off">Off</option>
+                  <option value="demand">On Demand (click mic)</option>
+                  <option value="auto">Auto (hands-free)</option>
+                </select>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       <div className="settings-section">

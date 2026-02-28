@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import QuestionCard from './QuestionCard'
 import ExamResults from './ExamResults'
 import { useSettings } from '../context/SettingsContext'
+import { speakQuestionWithLetters, stop, startListening, stopListening } from '../utils/tts'
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
@@ -12,6 +13,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const [showResult, setShowResult] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
   const [mustClickCorrect, setMustClickCorrect] = useState(false)
+  const [isListening, setIsListening] = useState(false)
   const autoAdvanceTimer = useRef(null)
 
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
@@ -27,8 +29,45 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
       if (autoAdvanceTimer.current) {
         clearTimeout(autoAdvanceTimer.current)
       }
+      stop()
+      stopListening()
     }
   }, [])
+
+  useEffect(() => {
+    if (questions.length > 0 && settings.ttsEnabled && settings.ttsAutoRead) {
+      const currentQuestion = questions[currentIndex]
+      if (currentQuestion) {
+        speakQuestionWithLetters(
+          currentQuestion.question,
+          currentQuestion.answers,
+          settings.ttsSpeed,
+          settings.ttsVoice
+        )
+      }
+    }
+  }, [currentIndex, questions, settings.ttsEnabled, settings.ttsAutoRead, settings.ttsSpeed, settings.ttsVoice])
+
+  useEffect(() => {
+    if (settings.ttsEnabled && settings.listeningMode === 'auto' && !isListening && !showResult) {
+      const success = startListening(
+        (answerIndex) => {
+          if (answerIndex >= 0) {
+            handleAnswer(answerIndex)
+          }
+          setIsListening(false)
+        },
+        () => setIsListening(false)
+      )
+      if (success) {
+        setIsListening(true)
+      }
+    }
+  }, [currentIndex, settings.ttsEnabled, settings.listeningMode, showResult, isListening])
+
+  const handleListeningChange = (listening) => {
+    setIsListening(listening)
+  }
 
   const advanceToNext = () => {
     if (currentIndex < questionCount - 1) {
@@ -41,6 +80,10 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   }
 
   const handleAnswer = (answerIndex) => {
+    if (isListening) {
+      stopListening()
+      setIsListening(false)
+    }
     const newAnswers = [...answers]
     newAnswers[currentIndex] = answerIndex
     setAnswers(newAnswers)
@@ -156,6 +199,8 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         showResult={showResult}
         mustClickCorrect={mustClickCorrect}
         showAnswer={mode === 'study' && settings.showAnswer}
+        listeningMode={settings.listeningMode}
+        onListeningChange={handleListeningChange}
       />
       
       <div className="exam-navigation">

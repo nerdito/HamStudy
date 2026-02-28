@@ -1,6 +1,26 @@
 import './QuestionCard.css'
+import { useContext, useEffect, useState } from 'react'
+import { SettingsContext } from '../context/SettingsContext'
+import { stop, isSpeaking, speakQuestionWithLetters, startListening, stopListening } from '../utils/tts'
 
-function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer }) {
+function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer, onListeningChange }) {
+  const settingsContext = useContext(SettingsContext)
+  const settings = settingsContext?.settings || { 
+    ttsEnabled: false, 
+    ttsSpeed: 1.0, 
+    ttsVoice: '',
+    listeningMode: 'off'
+  }
+  const [isReading, setIsReading] = useState(false)
+  const [isListeningActive, setIsListeningActive] = useState(false)
+
+  useEffect(() => {
+    return () => {
+      stop()
+      stopListening()
+    }
+  }, [])
+
   const getAnswerClass = (index) => {
     if (showAnswer || showResult) {
       if (index === question.correct) {
@@ -27,17 +47,90 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
   }
 
   const handleClick = (index, event) => {
+    if (isListeningActive) {
+      stopListening()
+      setIsListeningActive(false)
+      if (onListeningChange) onListeningChange(false)
+    }
     if (!showResult || mustClickCorrect) {
       onAnswer(index)
       event.target.blur()
     }
   }
 
+  const handleReadQuestion = () => {
+    if (isSpeaking()) {
+      stop()
+      setIsReading(false)
+    } else {
+      setIsReading(true)
+      speakQuestionWithLetters(
+        question.question, 
+        question.answers, 
+        settings.ttsSpeed, 
+        settings.ttsVoice
+      )
+    }
+  }
+
+  const handleReadQuestionEnd = () => {
+    setIsReading(false)
+  }
+
+  const handleMicClick = () => {
+    if (isListeningActive) {
+      stopListening()
+      setIsListeningActive(false)
+      if (onListeningChange) onListeningChange(false)
+    } else {
+      const success = startListening(
+        (answerIndex) => {
+          if (answerIndex >= 0 && (!showResult || mustClickCorrect)) {
+            onAnswer(answerIndex)
+          }
+          setIsListeningActive(false)
+          if (onListeningChange) onListeningChange(false)
+        },
+        () => {
+          setIsListeningActive(false)
+          if (onListeningChange) onListeningChange(false)
+        }
+      )
+      if (success) {
+        setIsListeningActive(true)
+        if (onListeningChange) onListeningChange(true)
+      }
+    }
+  }
+
+  const showMicButton = settings.ttsEnabled && settings.listeningMode && settings.listeningMode !== 'off'
+
   return (
     <div className="question-card">
       <div className="question-header">
         <span className="question-id">{question.id}</span>
         <span className="question-refs">{question.refs}</span>
+        <div className="tts-controls">
+          {settings.ttsEnabled && (
+            <button 
+              className={`tts-button ${isReading ? 'reading' : ''}`}
+              onClick={handleReadQuestion}
+              title={isReading ? 'Stop reading' : 'Read question aloud'}
+              onMouseLeave={handleReadQuestionEnd}
+            >
+              {isReading ? '⏹' : '🔊'}
+            </button>
+          )}
+          {showMicButton && (
+            <button 
+              className={`mic-button ${isListeningActive ? 'listening' : ''}`}
+              onClick={handleMicClick}
+              title={isListeningActive ? 'Stop listening' : 'Answer with voice'}
+            >
+              🎤
+            </button>
+          )}
+        </div>
       </div>
       <p className="question-text">{question.question}</p>
       <div className="answers-list">
