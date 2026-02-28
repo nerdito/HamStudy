@@ -46,9 +46,55 @@
   transform: scale(1.1);
 }
 
+.tts-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .tts-button.reading {
   background: #4a90d9;
   color: white;
+}
+
+.mic-button {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mic-button:hover {
+  background: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.mic-button.listening {
+  background: #dc3545;
+  color: white;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+  }
 }
 
 .question-text {

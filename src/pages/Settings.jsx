@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
+import { getVoices, isRecognitionSupported } from '../utils/tts'
+import { useState, useEffect } from 'react'
 import './Settings.css'
 
 const LICENSE_NAMES = {
@@ -9,7 +11,33 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setTtsEnabled, setTtsSpeed, setTtsAutoRead, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const [voices, setVoices] = useState([])
+  const [voicesLoaded, setVoicesLoaded] = useState(false)
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = getVoices()
+      if (availableVoices.length > 0) {
+        setVoices(availableVoices)
+        setVoicesLoaded(true)
+      }
+    }
+
+    loadVoices()
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+
+    const timer = setTimeout(() => {
+      if (!voicesLoaded) {
+        setVoices(getVoices())
+        setVoicesLoaded(true)
+      }
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleDecrement = (license) => {
     const current = settings.studyQuestions[license]
@@ -154,6 +182,24 @@ function Settings() {
           <>
             <div className="toggle-group">
               <label className="toggle-label">
+                <span>Voice</span>
+              </label>
+              <select
+                className="voice-select"
+                value={settings.ttsVoice}
+                onChange={(e) => setTtsVoice(e.target.value)}
+              >
+                <option value="">Default</option>
+                {voices.map(voice => (
+                  <option key={voice.name} value={voice.name}>
+                    {voice.name} ({voice.lang})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="toggle-group">
+              <label className="toggle-label">
                 <span>Speech Speed: {settings.ttsSpeed}x</span>
               </label>
               <input
@@ -181,6 +227,24 @@ function Settings() {
                 <span className="toggle-slider"></span>
               </label>
             </div>
+
+            {isRecognitionSupported() && (
+              <div className="toggle-group">
+                <label className="toggle-label">
+                  <span>Voice Answer Mode</span>
+                  <span className="toggle-description">Allow answering questions with your voice</span>
+                </label>
+                <select
+                  className="listening-select"
+                  value={settings.listeningMode}
+                  onChange={(e) => setListeningMode(e.target.value)}
+                >
+                  <option value="off">Off</option>
+                  <option value="demand">On Demand (click mic)</option>
+                  <option value="auto">Auto (hands-free)</option>
+                </select>
+              </div>
+            )}
           </>
         )}
       </div>

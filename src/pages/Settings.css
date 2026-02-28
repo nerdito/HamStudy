@@ -234,6 +234,23 @@
   margin-bottom: 1.5rem;
 }
 
+.voice-select,
+.listening-select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.voice-select:focus,
+.listening-select:focus {
+  outline: none;
+  border-color: #4a90d9;
+}
+
 .speed-slider {
   width: 150px;
   height: 8px;

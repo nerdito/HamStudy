@@ -15,7 +15,9 @@ const DEFAULT_SETTINGS = {
   showAnswer: false,
   ttsEnabled: false,
   ttsSpeed: 1.0,
-  ttsAutoRead: false
+  ttsVoice: '',
+  ttsAutoRead: false,
+  listeningMode: 'off'
 }
 
 const MAX_QUESTIONS = {
@@ -93,6 +95,14 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, ttsAutoRead: value }))
   }
 
+  const setTtsVoice = (value) => {
+    setSettings(prev => ({ ...prev, ttsVoice: value }))
+  }
+
+  const setListeningMode = (value) => {
+    setSettings(prev => ({ ...prev, listeningMode: value }))
+  }
+
   const saveExamResult = (result) => {
     const newResult = {
       id: Date.now(),
@@ -124,7 +134,9 @@ export function SettingsProvider({ children }) {
       setShowAnswer,
       setTtsEnabled,
       setTtsSpeed,
+      setTtsVoice,
       setTtsAutoRead,
+      setListeningMode,
       saveExamResult,
       examHistory,
       clearExamHistory,
