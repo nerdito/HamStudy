@@ -13,6 +13,7 @@ const DEFAULT_SETTINGS = {
   quickExam: false,
   fontSize: 'medium',
   showAnswer: false,
+  darkMode: false,
   ttsEnabled: false,
   ttsSpeed: 1.0,
   ttsVoice: '',
@@ -83,6 +84,10 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, showAnswer: value }))
   }
 
+  const setDarkMode = (value) => {
+    setSettings(prev => ({ ...prev, darkMode: value }))
+  }
+
   const setTtsEnabled = (value) => {
     setSettings(prev => ({ ...prev, ttsEnabled: value }))
   }
@@ -132,6 +137,7 @@ export function SettingsProvider({ children }) {
       setQuickExam,
       setFontSize,
       setShowAnswer,
+      setDarkMode,
       setTtsEnabled,
       setTtsSpeed,
       setTtsVoice,

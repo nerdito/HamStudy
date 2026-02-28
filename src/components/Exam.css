@@ -20,19 +20,19 @@
 .back-link {
   background: none;
   border: none;
-  color: #666;
+  color: var(--text-secondary);
   cursor: pointer;
   font-size: 0.9rem;
   padding: 0.5rem;
 }
 
 .back-link:hover {
-  color: #333;
+  color: var(--text-primary);
 }
 
 .question-counter {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -48,16 +48,17 @@
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .nav-button:hover:not(:disabled) {
-  border-color: #4a90d9;
-  color: #4a90d9;
+  border-color: var(--button-primary);
+  color: var(--button-primary);
 }
 
 .nav-button:disabled {
@@ -66,14 +67,14 @@
 }
 
 .nav-button.next-button {
-  background-color: #4a90d9;
-  border-color: #4a90d9;
+  background-color: var(--button-primary);
+  border-color: var(--button-primary);
   color: white;
 }
 
 .nav-button.next-button:hover:not(:disabled) {
-  background-color: #357abd;
-  border-color: #357abd;
+  background-color: var(--button-hover);
+  border-color: var(--button-hover);
   color: white;
 }
 
@@ -83,5 +84,5 @@
   align-items: center;
   min-height: 300px;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-secondary);
 }

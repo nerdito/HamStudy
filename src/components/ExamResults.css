@@ -3,16 +3,17 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow);
   max-width: 700px;
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .exam-results h2 {
   font-size: 2rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 2rem;
 }
 
@@ -24,7 +25,7 @@
 .score-percentage {
   font-size: 4rem;
   font-weight: 700;
-  color: #4a90d9;
+  color: var(--button-primary);
   line-height: 1;
 }
 
@@ -37,11 +38,11 @@
 }
 
 .correct-count {
-  color: #28a745;
+  color: var(--correct-text);
 }
 
 .wrong-count {
-  color: #dc3545;
+  color: var(--incorrect-text);
 }
 
 .result-message {
@@ -50,20 +51,20 @@
 }
 
 .pass-message {
-  color: #28a745;
+  color: var(--correct-text);
 }
 
 .fail-message {
-  color: #dc3545;
+  color: var(--incorrect-text);
 }
 
 .view-incorrect-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #dc3545;
-  background-color: white;
-  border: 2px solid #dc3545;
+  color: var(--incorrect-text);
+  background-color: var(--card-bg);
+  border: 2px solid var(--incorrect-text);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -71,7 +72,7 @@
 }
 
 .view-incorrect-button:hover {
-  background-color: #dc3545;
+  background-color: var(--incorrect-text);
   color: white;
 }
 
@@ -83,8 +84,8 @@
 }
 
 .incorrect-item {
-  background: #fff5f5;
-  border: 1px solid #ffcccc;
+  background: var(--incorrect-bg);
+  border: 1px solid var(--incorrect-text);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -92,13 +93,13 @@
 
 .incorrect-question {
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 0.75rem;
   line-height: 1.4;
 }
 
 .question-number {
-  color: #dc3545;
+  color: var(--incorrect-text);
   font-weight: 700;
 }
 
@@ -116,19 +117,19 @@
 }
 
 .your-answer {
-  background: #ffebee;
-  border-left: 3px solid #dc3545;
+  background: var(--incorrect-bg);
+  border-left: 3px solid var(--incorrect-text);
 }
 
 .correct-answer {
-  background: #e8f5e9;
-  border-left: 3px solid #28a745;
+  background: var(--correct-bg);
+  border-left: 3px solid var(--correct-text);
 }
 
 .answer-label {
   font-weight: 600;
   margin-right: 0.5rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .result-buttons {
@@ -137,7 +138,7 @@
 }
 
 .restart-button,
-.home-button {
+.home-button-results {
   padding: 0.875rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -149,19 +150,19 @@
 }
 
 .restart-button {
-  background-color: #4a90d9;
+  background-color: var(--button-primary);
   color: white;
 }
 
 .restart-button:hover {
-  background-color: #357abd;
+  background-color: var(--button-hover);
 }
 
-.home-button {
+.home-button-results {
   background-color: #6c757d;
   color: white;
 }
 
-.home-button:hover {
+.home-button-results:hover {
   background-color: #5a6268;
 }
