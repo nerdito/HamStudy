@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { BUILD_NUMBER } from '../build-number'
 
-const SettingsContext = createContext()
+export const SettingsContext = createContext()
 
 const DEFAULT_SETTINGS = {
   studyQuestions: {
@@ -12,7 +12,10 @@ const DEFAULT_SETTINGS = {
   quickPractice: false,
   quickExam: false,
   fontSize: 'medium',
-  showAnswer: false
+  showAnswer: false,
+  ttsEnabled: false,
+  ttsSpeed: 1.0,
+  ttsAutoRead: false
 }
 
 const MAX_QUESTIONS = {
@@ -78,6 +81,18 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, showAnswer: value }))
   }
 
+  const setTtsEnabled = (value) => {
+    setSettings(prev => ({ ...prev, ttsEnabled: value }))
+  }
+
+  const setTtsSpeed = (value) => {
+    setSettings(prev => ({ ...prev, ttsSpeed: value }))
+  }
+
+  const setTtsAutoRead = (value) => {
+    setSettings(prev => ({ ...prev, ttsAutoRead: value }))
+  }
+
   const saveExamResult = (result) => {
     const newResult = {
       id: Date.now(),
@@ -107,6 +122,9 @@ export function SettingsProvider({ children }) {
       setQuickExam,
       setFontSize,
       setShowAnswer,
+      setTtsEnabled,
+      setTtsSpeed,
+      setTtsAutoRead,
       saveExamResult,
       examHistory,
       clearExamHistory,

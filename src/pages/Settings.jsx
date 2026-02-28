@@ -9,7 +9,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setTtsEnabled, setTtsSpeed, setTtsAutoRead, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
 
   const handleDecrement = (license) => {
     const current = settings.studyQuestions[license]
@@ -130,6 +130,59 @@ function Settings() {
             <span className="toggle-slider"></span>
           </label>
         </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Text-to-Speech Settings</h2>
+        
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Enable Text-to-Speech</span>
+            <span className="toggle-description">Show read aloud button on questions</span>
+          </label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={settings.ttsEnabled}
+              onChange={(e) => setTtsEnabled(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+
+        {settings.ttsEnabled && (
+          <>
+            <div className="toggle-group">
+              <label className="toggle-label">
+                <span>Speech Speed: {settings.ttsSpeed}x</span>
+              </label>
+              <input
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.1"
+                value={settings.ttsSpeed}
+                onChange={(e) => setTtsSpeed(parseFloat(e.target.value))}
+                className="speed-slider"
+              />
+            </div>
+
+            <div className="toggle-group">
+              <label className="toggle-label">
+                <span>Auto-read Questions</span>
+                <span className="toggle-description">Automatically read questions aloud when they appear</span>
+              </label>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.ttsAutoRead}
+                  onChange={(e) => setTtsAutoRead(e.target.checked)}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="settings-section">

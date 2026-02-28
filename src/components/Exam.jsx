@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import QuestionCard from './QuestionCard'
 import ExamResults from './ExamResults'
 import { useSettings } from '../context/SettingsContext'
+import { speak, stop } from '../utils/tts'
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
@@ -27,8 +28,19 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
       if (autoAdvanceTimer.current) {
         clearTimeout(autoAdvanceTimer.current)
       }
+      stop()
     }
   }, [])
+
+  useEffect(() => {
+    if (questions.length > 0 && settings.ttsEnabled && settings.ttsAutoRead) {
+      const currentQuestion = questions[currentIndex]
+      if (currentQuestion) {
+        const text = `${currentQuestion.question}. ${currentQuestion.answers.join('. ')}`
+        speak(text, settings.ttsSpeed)
+      }
+    }
+  }, [currentIndex, questions, settings.ttsEnabled, settings.ttsAutoRead, settings.ttsSpeed])
 
   const advanceToNext = () => {
     if (currentIndex < questionCount - 1) {

@@ -1,6 +1,13 @@
 import './QuestionCard.css'
+import { useContext } from 'react'
+import { SettingsContext } from '../context/SettingsContext'
+import { speak, stop, isSpeaking } from '../utils/tts'
+import { useState } from 'react'
 
 function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer }) {
+  const settingsContext = useContext(SettingsContext)
+  const settings = settingsContext?.settings || { ttsEnabled: false, ttsSpeed: 1.0 }
+  const [isReading, setIsReading] = useState(false)
   const getAnswerClass = (index) => {
     if (showAnswer || showResult) {
       if (index === question.correct) {
@@ -33,11 +40,40 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
     }
   }
 
+  const handleReadQuestion = () => {
+    if (isSpeaking()) {
+      stop()
+      setIsReading(false)
+    } else {
+      setIsReading(true)
+      speakQuestion(question.question, question.answers, settings.ttsSpeed)
+    }
+  }
+
+  const handleReadQuestionEnd = () => {
+    setIsReading(false)
+  }
+
+  const speakQuestion = (questionText, answers, rate) => {
+    const text = `${questionText}. ${answers.join('. ')}`;
+    speak(text, rate);
+  }
+
   return (
     <div className="question-card">
       <div className="question-header">
         <span className="question-id">{question.id}</span>
         <span className="question-refs">{question.refs}</span>
+        {settings.ttsEnabled && (
+          <button 
+            className={`tts-button ${isReading ? 'reading' : ''}`}
+            onClick={handleReadQuestion}
+            title={isReading ? 'Stop reading' : 'Read question aloud'}
+            onMouseLeave={handleReadQuestionEnd}
+          >
+            {isReading ? '⏹' : '🔊'}
+          </button>
+        )}
       </div>
       <p className="question-text">{question.question}</p>
       <div className="answers-list">
