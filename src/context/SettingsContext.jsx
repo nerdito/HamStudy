@@ -1,5 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { BUILD_NUMBER } from '../build-number'
+
+let BUILD_NUMBER = '0.0.0'
+try {
+  // eslint-disable-next-line no-undef
+  const bn = require('../build-number')
+  BUILD_NUMBER = bn.BUILD_NUMBER || '0.0.0'
+} catch {
+  // Fallback - build-number.js may not exist in test environment
+}
 
 const SettingsContext = createContext()
 

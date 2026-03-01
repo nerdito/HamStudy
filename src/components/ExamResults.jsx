@@ -12,7 +12,8 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
     if (license) {
       saveExamResult({ license, correct, total })
     }
-  }, [license, correct, total, saveExamResult])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getIncorrectQuestions = () => {
     return questions
