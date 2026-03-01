@@ -4,6 +4,7 @@ import Study from './pages/Study'
 import Practice from './pages/Practice'
 import Settings from './pages/Settings'
 import Stats from './pages/Stats'
+import FlashcardsPage from './pages/FlashcardsPage'
 import { useSettings } from './context/SettingsContext'
 import { useEffect } from 'react'
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/practice" element={<Practice />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/stats" element={<Stats />} />
+        <Route path="/flashcards" element={<FlashcardsPage />} />
       </Routes>
     </div>
   )

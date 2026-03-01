@@ -43,6 +43,7 @@ function Home() {
       <div className="button-container">
         <Link to="/study" className="home-button">Study</Link>
         <Link to="/practice" className="home-button">Practice Exam</Link>
+        <Link to="/flashcards" className="home-button">Flashcards</Link>
         <Link to="/settings" className="home-button">Settings</Link>
       </div>
 
