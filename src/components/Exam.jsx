@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import QuestionCard from './QuestionCard'
 import ExamResults from './ExamResults'
 import { useSettings } from '../context/SettingsContext'
@@ -30,7 +30,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     }
     setQuestions(selectedQuestions)
     setAnswers(new Array(questionCount).fill(null))
-  }, [allQuestions, questionCount, settings.srsEnabled])
+  }, [allQuestions, questionCount, settings.srsEnabled, getQuestionsDueForReview])
 
   useEffect(() => {
     return () => {
@@ -71,13 +71,13 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         setIsListening(true)
       }
     }
-  }, [currentIndex, settings.ttsEnabled, settings.listeningMode, showResult, isListening])
+  }, [currentIndex, settings.ttsEnabled, settings.listeningMode, showResult, isListening, handleAnswer])
 
   const handleListeningChange = (listening) => {
     setIsListening(listening)
   }
 
-  const advanceToNext = () => {
+  const advanceToNext = useCallback(() => {
     if (currentIndex < questionCount - 1) {
       setCurrentIndex(currentIndex + 1)
       setShowResult(false)
@@ -85,9 +85,9 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     } else {
       setIsComplete(true)
     }
-  }
+  }, [currentIndex, questionCount])
 
-  const handleAnswer = (answerIndex) => {
+  const handleAnswer = useCallback((answerIndex) => {
     if (isListening) {
       stopListening()
       setIsListening(false)
@@ -130,7 +130,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         setIsComplete(true)
       }
     }
-  }
+  }, [isListening, answers, currentIndex, questions, settings.srsEnabled, mode, mustClickCorrect, isQuickMode, questionCount, updateSRSQuestion, advanceToNext])
 
   const handleNext = () => {
     if (autoAdvanceTimer.current) {
