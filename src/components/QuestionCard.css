@@ -53,6 +53,30 @@
   align-items: center;
 }
 
+.bookmark-button {
+  background: var(--bg-primary);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #ffc107;
+}
+
+.bookmark-button:hover {
+  background: var(--border-color);
+  transform: scale(1.1);
+}
+
+.bookmark-button.bookmarked {
+  color: #ffc107;
+}
+
 .tts-button.reading {
   background: var(--button-primary);
   color: white;

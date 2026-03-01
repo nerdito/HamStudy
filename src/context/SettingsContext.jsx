@@ -39,6 +39,7 @@ const FONT_SIZES = {
 const STORAGE_KEY = 'hamStudySettings'
 const HISTORY_KEY = 'hamStudyExamHistory'
 const SRS_KEY = 'hamStudySRS'
+const BOOKMARKS_KEY = 'hamStudyBookmarks'
 
 const getStoredSettings = () => {
   try {
@@ -67,10 +68,20 @@ const getStoredSRS = () => {
   }
 }
 
+const getStoredBookmarks = () => {
+  try {
+    const stored = localStorage.getItem(BOOKMARKS_KEY)
+    return stored ? JSON.parse(stored) : { technician: [], general: [], extra: [] }
+  } catch {
+    return { technician: [], general: [], extra: [] }
+  }
+}
+
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(getStoredSettings)
   const [examHistory, setExamHistory] = useState(getStoredHistory)
   const [srsData, setSrsData] = useState(getStoredSRS)
+  const [bookmarks, setBookmarks] = useState(getStoredBookmarks)
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
@@ -83,6 +94,10 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     localStorage.setItem(SRS_KEY, JSON.stringify(srsData))
   }, [srsData])
+
+  useEffect(() => {
+    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks))
+  }, [bookmarks])
 
   const buildNumber = BUILD_NUMBER
 
@@ -222,6 +237,41 @@ export function SettingsProvider({ children }) {
     return srsData[questionId] || null
   }
 
+  const addBookmark = (license, questionId) => {
+    setBookmarks(prev => {
+      const current = prev[license] || []
+      if (current.includes(questionId)) return prev
+      return { ...prev, [license]: [...current, questionId] }
+    })
+  }
+
+  const removeBookmark = (license, questionId) => {
+    setBookmarks(prev => ({
+      ...prev,
+      [license]: (prev[license] || []).filter(id => id !== questionId)
+    }))
+  }
+
+  const isBookmarked = (license, questionId) => {
+    return (bookmarks[license] || []).includes(questionId)
+  }
+
+  const toggleBookmark = (license, questionId) => {
+    if (isBookmarked(license, questionId)) {
+      removeBookmark(license, questionId)
+    } else {
+      addBookmark(license, questionId)
+    }
+  }
+
+  const getBookmarks = (license) => {
+    return bookmarks[license] || []
+  }
+
+  const clearBookmarks = () => {
+    setBookmarks({ technician: [], general: [], extra: [] })
+  }
+
   const clearExamHistory = () => {
     setExamHistory([])
   }
@@ -254,6 +304,12 @@ export function SettingsProvider({ children }) {
       getSRSQuestionPriority,
       getQuestionsDueForReview,
       getQuestionStats,
+      addBookmark,
+      removeBookmark,
+      toggleBookmark,
+      isBookmarked,
+      getBookmarks,
+      clearBookmarks,
       clearSRSData,
       examHistory,
       clearExamHistory,

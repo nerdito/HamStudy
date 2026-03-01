@@ -6,7 +6,7 @@ import { speakQuestionWithLetters, stop, startListening, stopListening } from '.
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
-  const { settings, getQuestionsDueForReview, updateSRSQuestion } = useSettings()
+  const { settings, getQuestionsDueForReview, updateSRSQuestion, isBookmarked, toggleBookmark } = useSettings()
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -213,6 +213,8 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         showAnswer={mode === 'study' && settings.showAnswer}
         listeningMode={settings.listeningMode}
         onListeningChange={handleListeningChange}
+        isBookmarked={isBookmarked(license, currentQuestion.id)}
+        onToggleBookmark={() => toggleBookmark(license, currentQuestion.id)}
       />
       
       <div className="exam-navigation">
