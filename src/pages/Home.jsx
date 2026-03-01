@@ -10,7 +10,7 @@ const LICENSE_NAMES = {
 }
 
 function Home() {
-  const { examHistory } = useSettings()
+  const { examHistory, streakData, getMilestone } = useSettings()
 
   const recentExams = examHistory.slice(0, 5)
   
@@ -19,6 +19,8 @@ function Home() {
     averageScore: Math.round(examHistory.reduce((sum, e) => sum + e.percentage, 0) / examHistory.length),
     passRate: Math.round((examHistory.filter(e => e.passed).length / examHistory.length) * 100)
   } : null
+
+  const milestone = getMilestone(streakData.currentStreak)
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -37,6 +39,14 @@ function Home() {
         <Link to="/settings" className="home-button">Settings</Link>
       </div>
 
+      {streakData.currentStreak > 0 && (
+        <div className="streak-banner">
+          <span className="streak-icon">🔥</span>
+          <span className="streak-count">{streakData.currentStreak} day{streakData.currentStreak !== 1 ? 's' : ''} streak!</span>
+          {milestone && <span className="streak-milestone">{milestone.icon}</span>}
+        </div>
+      )}
+
       {examHistory.length > 0 && (
         <div className="progress-section">
           <h2>Your Progress</h2>
@@ -54,6 +64,10 @@ function Home() {
               <div className="stat-card">
                 <div className="stat-value">{stats.passRate}%</div>
                 <div className="stat-label">Pass Rate</div>
+              </div>
+              <div className="stat-card">
+                <Link to="/stats" className="stats-link">View All</Link>
+                <div className="stat-label">Detailed Stats</div>
               </div>
             </div>
           )}

@@ -40,6 +40,11 @@ export function SettingsProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
+  const [streakData, setStreakData] = useState(() => {
+    const saved = localStorage.getItem('hamStudyStreak')
+    return saved ? JSON.parse(saved) : { currentStreak: 0, longestStreak: 0, lastStudyDate: null, totalStudyDays: 0 }
+  })
+
   const [buildNumber] = useState(BUILD_NUMBER || '')
 
   useEffect(() => {
@@ -49,6 +54,59 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('hamStudyExamHistory', JSON.stringify(examHistory))
   }, [examHistory])
+
+  useEffect(() => {
+    localStorage.setItem('hamStudyStreak', JSON.stringify(streakData))
+  }, [streakData])
+
+  const getTodayString = () => {
+    return new Date().toISOString().split('T')[0]
+  }
+
+  const getYesterdayString = () => {
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    return yesterday.toISOString().split('T')[0]
+  }
+
+  const updateStreak = () => {
+    const today = getTodayString()
+    const yesterday = getYesterdayString()
+
+    setStreakData(prev => {
+      if (prev.lastStudyDate === today) {
+        return prev
+      }
+
+      let newStreak
+      if (prev.lastStudyDate === yesterday) {
+        newStreak = prev.currentStreak + 1
+      } else if (prev.lastStudyDate === null) {
+        newStreak = 1
+      } else {
+        newStreak = 1
+      }
+
+      return {
+        currentStreak: newStreak,
+        longestStreak: Math.max(prev.longestStreak, newStreak),
+        lastStudyDate: today,
+        totalStudyDays: prev.lastStudyDate === today ? prev.totalStudyDays : prev.totalStudyDays + 1
+      }
+    })
+  }
+
+  const getMilestone = (streak) => {
+    const milestones = [
+      { days: 365, name: 'Year Legend', icon: '🏆' },
+      { days: 100, name: 'Century Champion', icon: '🏆' },
+      { days: 60, name: 'Two Month Titan', icon: '🏆' },
+      { days: 30, name: 'Monthly Master', icon: '🏆' },
+      { days: 14, name: 'Two Week Champion', icon: '🏆' },
+      { days: 7, name: 'Week Warrior', icon: '🏆' }
+    ]
+    return milestones.find(m => streak >= m.days) || null
+  }
 
   const updateStudyQuestions = (license, count) => {
     const max = MAX_QUESTIONS[license]
@@ -109,6 +167,9 @@ export function SettingsProvider({ children }) {
       setShowAnswer,
       saveExamResult,
       examHistory,
+      streakData,
+      updateStreak,
+      getMilestone,
       clearExamHistory,
       resetToDefaults,
       MAX_QUESTIONS,

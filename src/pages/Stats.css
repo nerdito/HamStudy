@@ -1,0 +1,156 @@
+.stats-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stats-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.no-data {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.stats-section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.stats-section h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.stats-section h3 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.streak-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.streak-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.streak-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.streak-card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--button-primary);
+}
+
+.streak-card-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.current-milestone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.milestone-icon {
+  font-size: 2rem;
+}
+
+.milestone-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.milestones-list {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.milestone-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0.4;
+}
+
+.milestone-badge.earned {
+  opacity: 1;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
+}
+
+.milestone-badge-icon {
+  font-size: 1.5rem;
+}
+
+.milestone-badge-days {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.milestone-badge-name {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .streak-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .milestones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -3,7 +3,7 @@ import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
 function ExamResults({ correct, total, questions, answers, license, onRestart }) {
-  const { saveExamResult } = useSettings()
+  const { saveExamResult, updateStreak } = useSettings()
   const [showIncorrect, setShowIncorrect] = useState(false)
   const percentage = Math.round((correct / total) * 100)
   const wrongCount = total - correct
@@ -11,8 +11,9 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
   useEffect(() => {
     if (license) {
       saveExamResult({ license, correct, total })
+      updateStreak()
     }
-  }, [license, correct, total, saveExamResult])
+  }, [license, correct, total, saveExamResult, updateStreak])
 
   const getIncorrectQuestions = () => {
     return questions
