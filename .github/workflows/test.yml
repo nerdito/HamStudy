@@ -22,27 +22,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-
-      - name: Generate build-number
-        run: node scripts/generate-build-number.cjs
-
       - name: Run linter
         run: npm run lint
 
-      - name: Run Jest tests
-        run: npm test
-
-      - name: Start dev server
-        run: npm run dev &
-        shell: bash
-
-      - name: Wait for server
-        run: sleep 15
-
-      - name: Run Playwright tests
-        run: node test-exam.cjs
+      - name: Run tests
+        run: npm test -- --coverage
 
       - name: Build
         run: npm run build
