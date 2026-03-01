@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { BUILD_NUMBER } from '../build-number'
 
 export const SettingsContext = createContext()
@@ -223,7 +223,7 @@ export function SettingsProvider({ children }) {
            (isOverdue ? 100 : 0)
   }
 
-  const getQuestionsDueForReview = (licenseQuestions) => {
+  const getQuestionsDueForReview = useCallback((licenseQuestions) => {
     const now = Date.now()
     return licenseQuestions.filter(q => {
       const data = srsData[q.id]
@@ -231,7 +231,7 @@ export function SettingsProvider({ children }) {
       if (!data.lastReview) return true
       return (now - data.lastReview) > (data.interval * 24 * 60 * 60 * 1000)
     })
-  }
+  }, [srsData])
 
   const getQuestionStats = (questionId) => {
     return srsData[questionId] || null

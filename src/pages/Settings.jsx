@@ -13,14 +13,12 @@ const LICENSE_NAMES = {
 function Settings() {
   const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setDarkMode, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
   const [voices, setVoices] = useState([])
-  const [voicesLoaded, setVoicesLoaded] = useState(false)
 
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = getVoices()
       if (availableVoices.length > 0) {
         setVoices(availableVoices)
-        setVoicesLoaded(true)
       }
     }
 
@@ -30,10 +28,7 @@ function Settings() {
     }
 
     const timer = setTimeout(() => {
-      if (!voicesLoaded) {
-        setVoices(getVoices())
-        setVoicesLoaded(true)
-      }
+      setVoices(getVoices())
     }, 1000)
 
     return () => clearTimeout(timer)
