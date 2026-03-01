@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import './ExamResults.css'
 
 function ExamResults({ correct, total, questions, answers, license, onRestart }) {
+  const navigate = useNavigate()
   const { saveExamResult } = useSettings()
   const [showIncorrect, setShowIncorrect] = useState(false)
   const percentage = Math.round((correct / total) * 100)
@@ -12,7 +14,8 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
     if (license) {
       saveExamResult({ license, correct, total })
     }
-  }, [license, correct, total, saveExamResult])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const incorrectQuestions = useMemo(() => {
     return questions
@@ -25,7 +28,7 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
   }, [questions, answers])
 
   const handleBackHome = () => {
-    window.location.href = '/HamStudy/'
+    navigate('/')
   }
 
   return (
