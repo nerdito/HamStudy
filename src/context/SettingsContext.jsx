@@ -18,7 +18,8 @@ const DEFAULT_SETTINGS = {
   ttsSpeed: 1.0,
   ttsVoice: '',
   ttsAutoRead: false,
-  listeningMode: 'off'
+  listeningMode: 'off',
+  srsEnabled: false
 }
 
 const MAX_QUESTIONS = {
@@ -32,38 +33,65 @@ const FONT_SIZES = {
   medium: '16px',
   large: '18px',
   xlarge: '20px',
-  xxlarge: '24px'
+  xxlarge: '22px'
+}
+
+const STORAGE_KEY = 'hamStudySettings'
+const HISTORY_KEY = 'hamStudyExamHistory'
+const SRS_KEY = 'hamStudySRS'
+
+const getStoredSettings = () => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS
+  } catch {
+    return DEFAULT_SETTINGS
+  }
+}
+
+const getStoredHistory = () => {
+  try {
+    const stored = localStorage.getItem(HISTORY_KEY)
+    return stored ? JSON.parse(stored) : []
+  } catch {
+    return []
+  }
+}
+
+const getStoredSRS = () => {
+  try {
+    const stored = localStorage.getItem(SRS_KEY)
+    return stored ? JSON.parse(stored) : {}
+  } catch {
+    return {}
+  }
 }
 
 export function SettingsProvider({ children }) {
-  const [settings, setSettings] = useState(() => {
-    const saved = localStorage.getItem('hamStudySettings')
-    return saved ? JSON.parse(saved) : DEFAULT_SETTINGS
-  })
-
-  const [examHistory, setExamHistory] = useState(() => {
-    const saved = localStorage.getItem('hamStudyExamHistory')
-    return saved ? JSON.parse(saved) : []
-  })
-
-  const [buildNumber] = useState(BUILD_NUMBER || '')
+  const [settings, setSettings] = useState(getStoredSettings)
+  const [examHistory, setExamHistory] = useState(getStoredHistory)
+  const [srsData, setSrsData] = useState(getStoredSRS)
 
   useEffect(() => {
-    localStorage.setItem('hamStudySettings', JSON.stringify(settings))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
   }, [settings])
 
   useEffect(() => {
-    localStorage.setItem('hamStudyExamHistory', JSON.stringify(examHistory))
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(examHistory))
   }, [examHistory])
 
+  useEffect(() => {
+    localStorage.setItem(SRS_KEY, JSON.stringify(srsData))
+  }, [srsData])
+
+  const buildNumber = BUILD_NUMBER
+
   const updateStudyQuestions = (license, count) => {
-    const max = MAX_QUESTIONS[license]
-    const validCount = Math.max(5, Math.min(count, max))
     setSettings(prev => ({
       ...prev,
       studyQuestions: {
         ...prev.studyQuestions,
-        [license]: validCount
+        [license]: count
       }
     }))
   }
@@ -108,6 +136,10 @@ export function SettingsProvider({ children }) {
     setSettings(prev => ({ ...prev, listeningMode: value }))
   }
 
+  const setSrsEnabled = (value) => {
+    setSettings(prev => ({ ...prev, srsEnabled: value }))
+  }
+
   const saveExamResult = (result) => {
     const newResult = {
       id: Date.now(),
@@ -121,12 +153,85 @@ export function SettingsProvider({ children }) {
     setExamHistory(prev => [newResult, ...prev].slice(0, 50))
   }
 
+  const updateSRSQuestion = (questionId, isCorrect) => {
+    setSrsData(prev => {
+      const current = prev[questionId] || {
+        easeFactor: 2.5,
+        interval: 1,
+        repetitions: 0,
+        lastReview: null,
+        incorrectCount: 0
+      }
+
+      let newData
+      if (isCorrect) {
+        const newRepetitions = current.repetitions + 1
+        let newInterval
+        if (newRepetitions === 1) {
+          newInterval = 1
+        } else if (newRepetitions === 2) {
+          newInterval = 6
+        } else {
+          newInterval = Math.round(current.interval * current.easeFactor)
+        }
+
+        newData = {
+          easeFactor: Math.min(current.easeFactor + 0.1, 3.0),
+          interval: newInterval,
+          repetitions: newRepetitions,
+          lastReview: Date.now(),
+          incorrectCount: current.incorrectCount
+        }
+      } else {
+        newData = {
+          easeFactor: Math.max(current.easeFactor - 0.2, 1.3),
+          interval: 1,
+          repetitions: 0,
+          lastReview: Date.now(),
+          incorrectCount: current.incorrectCount + 1
+        }
+      }
+
+      return { ...prev, [questionId]: newData }
+    })
+  }
+
+  const getSRSQuestionPriority = (questionId) => {
+    const data = srsData[questionId]
+    if (!data) return 100
+
+    const now = Date.now()
+    const isOverdue = data.lastReview && (now - data.lastReview) > (data.interval * 24 * 60 * 60 * 1000)
+
+    return (data.incorrectCount * 10) +
+           (1 / (data.repetitions + 1)) +
+           (isOverdue ? 100 : 0)
+  }
+
+  const getQuestionsDueForReview = (licenseQuestions) => {
+    const now = Date.now()
+    return licenseQuestions.filter(q => {
+      const data = srsData[q.id]
+      if (!data) return true
+      if (!data.lastReview) return true
+      return (now - data.lastReview) > (data.interval * 24 * 60 * 60 * 1000)
+    })
+  }
+
+  const getQuestionStats = (questionId) => {
+    return srsData[questionId] || null
+  }
+
   const clearExamHistory = () => {
     setExamHistory([])
   }
 
   const resetToDefaults = () => {
     setSettings(DEFAULT_SETTINGS)
+  }
+
+  const clearSRSData = () => {
+    setSrsData({})
   }
 
   return (
@@ -143,7 +248,13 @@ export function SettingsProvider({ children }) {
       setTtsVoice,
       setTtsAutoRead,
       setListeningMode,
+      setSrsEnabled,
       saveExamResult,
+      updateSRSQuestion,
+      getSRSQuestionPriority,
+      getQuestionsDueForReview,
+      getQuestionStats,
+      clearSRSData,
       examHistory,
       clearExamHistory,
       resetToDefaults,

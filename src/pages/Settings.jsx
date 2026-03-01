@@ -11,7 +11,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setDarkMode, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setDarkMode, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
   const [voices, setVoices] = useState([])
   const [voicesLoaded, setVoicesLoaded] = useState(false)
 
@@ -262,6 +262,29 @@ function Settings() {
             )}
           </>
         )}
+      </div>
+
+      <div className="settings-section">
+        <h2>Spaced Repetition Settings</h2>
+        
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Enable Spaced Repetition</span>
+            <span className="toggle-description">Prioritize questions you've gotten wrong in future sessions</span>
+          </label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={settings.srsEnabled}
+              onChange={(e) => setSrsEnabled(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+
+        <button className="reset-button" onClick={clearSRSData}>
+          Reset SRS Data
+        </button>
       </div>
 
       <div className="settings-section">
