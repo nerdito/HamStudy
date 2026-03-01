@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { SettingsContext } from '../context/SettingsContext'
 import { stop, isSpeaking, speakQuestionWithLetters, startListening, stopListening } from '../utils/tts'
 
-function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer, onListeningChange }) {
+function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer, onListeningChange, isBookmarked, onToggleBookmark }) {
   const settingsContext = useContext(SettingsContext)
   const settings = settingsContext?.settings || { 
     ttsEnabled: false, 
@@ -111,6 +111,15 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
         <span className="question-id">{question.id}</span>
         <span className="question-refs">{question.refs}</span>
         <div className="tts-controls">
+          {onToggleBookmark && (
+            <button 
+              className={`bookmark-button ${isBookmarked ? 'bookmarked' : ''}`}
+              onClick={() => onToggleBookmark(question.id)}
+              title={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}
+            >
+              {isBookmarked ? '★' : '☆'}
+            </button>
+          )}
           {settings.ttsEnabled && (
             <button 
               className={`tts-button ${isReading ? 'reading' : ''}`}

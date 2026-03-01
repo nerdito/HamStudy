@@ -17,7 +17,16 @@ function Home() {
   const stats = examHistory.length > 0 ? {
     totalExams: examHistory.length,
     averageScore: Math.round(examHistory.reduce((sum, e) => sum + e.percentage, 0) / examHistory.length),
-    passRate: Math.round((examHistory.filter(e => e.passed).length / examHistory.length) * 100)
+    passRate: Math.round((examHistory.filter(e => e.passed).length / examHistory.length) * 100),
+    bestScore: Math.max(...examHistory.map(e => e.percentage)),
+    totalQuestions: examHistory.reduce((sum, e) => sum + e.total, 0),
+    totalCorrect: examHistory.reduce((sum, e) => sum + e.correct, 0)
+  } : null
+
+  const licenseStats = examHistory.length > 0 ? {
+    technician: examHistory.filter(e => e.license === 'technician').length,
+    general: examHistory.filter(e => e.license === 'general').length,
+    extra: examHistory.filter(e => e.license === 'extra').length
   } : null
 
   const formatDate = (dateString) => {
@@ -42,20 +51,54 @@ function Home() {
           <h2>Your Progress</h2>
           
           {stats && (
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-value">{stats.totalExams}</div>
-                <div className="stat-label">Total Exams</div>
+            <>
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="stat-value">{stats.totalExams}</div>
+                  <div className="stat-label">Total Exams</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{stats.averageScore}%</div>
+                  <div className="stat-label">Average Score</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{stats.passRate}%</div>
+                  <div className="stat-label">Pass Rate</div>
+                </div>
               </div>
-              <div className="stat-card">
-                <div className="stat-value">{stats.averageScore}%</div>
-                <div className="stat-label">Average Score</div>
+
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="stat-value">{stats.bestScore}%</div>
+                  <div className="stat-label">Best Score</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{stats.totalCorrect}/{stats.totalQuestions}</div>
+                  <div className="stat-label">Total Correct</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{licenseStats?.technician || 0}</div>
+                  <div className="stat-label">Technician Exams</div>
+                </div>
               </div>
-              <div className="stat-card">
-                <div className="stat-value">{stats.passRate}%</div>
-                <div className="stat-label">Pass Rate</div>
+
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="stat-value">{licenseStats?.general || 0}</div>
+                  <div className="stat-label">General Exams</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{licenseStats?.extra || 0}</div>
+                  <div className="stat-label">Extra Exams</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">
+                    <Link to="/stats" className="stats-link">View All →</Link>
+                  </div>
+                  <div className="stat-label">Detailed Stats</div>
+                </div>
               </div>
-            </div>
+            </>
           )}
 
           {recentExams.length > 0 && (

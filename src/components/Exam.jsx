@@ -6,7 +6,7 @@ import { speakQuestionWithLetters, stop, startListening, stopListening } from '.
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
-  const { settings } = useSettings()
+  const { settings, getQuestionsDueForReview, updateSRSQuestion, isBookmarked, toggleBookmark } = useSettings()
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -19,10 +19,18 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
 
   useEffect(() => {
-    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5)
-    setQuestions(shuffled.slice(0, questionCount))
+    let selectedQuestions
+    if (settings.srsEnabled) {
+      const dueQuestions = getQuestionsDueForReview(allQuestions)
+      const shuffled = [...dueQuestions].sort(() => Math.random() - 0.5)
+      selectedQuestions = shuffled.slice(0, questionCount)
+    } else {
+      const shuffled = [...allQuestions].sort(() => Math.random() - 0.5)
+      selectedQuestions = shuffled.slice(0, questionCount)
+    }
+    setQuestions(selectedQuestions)
     setAnswers(new Array(questionCount).fill(null))
-  }, [allQuestions, questionCount])
+  }, [allQuestions, questionCount, settings.srsEnabled])
 
   useEffect(() => {
     return () => {
@@ -89,6 +97,10 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     setAnswers(newAnswers)
     const currentQuestion = questions[currentIndex]
     const isCorrect = answerIndex === currentQuestion.correct
+
+    if (settings.srsEnabled) {
+      updateSRSQuestion(currentQuestion.id, isCorrect)
+    }
 
     if (mode === 'study') {
       if (mustClickCorrect) {
@@ -201,6 +213,8 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
         showAnswer={mode === 'study' && settings.showAnswer}
         listeningMode={settings.listeningMode}
         onListeningChange={handleListeningChange}
+        isBookmarked={isBookmarked(license, currentQuestion.id)}
+        onToggleBookmark={() => toggleBookmark(license, currentQuestion.id)}
       />
       
       <div className="exam-navigation">
