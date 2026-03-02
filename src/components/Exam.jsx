@@ -19,6 +19,11 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
 
   useEffect(() => {
+    if (!allQuestions || allQuestions.length === 0) {
+      setQuestions([])
+      setAnswers(new Array(questionCount).fill(null))
+      return
+    }
     let selectedQuestions
     if (settings.srsEnabled) {
       const dueQuestions = getQuestionsDueForReview(allQuestions)
