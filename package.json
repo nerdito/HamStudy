@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://nerdito.github.io/HamStudy",
+  "overrides": {
+    "glob": "^11.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "node scripts/generate-build-number.cjs && vite build",
