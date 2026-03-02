@@ -13,5 +13,3 @@ export const licenseNames = {
   general: 'General',
   extra: 'Extra',
 }
-
-export default questionPools

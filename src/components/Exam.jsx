@@ -156,6 +156,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   }
 
   const handleRestart = () => {
+    if (!allQuestions || allQuestions.length === 0) return
     if (autoAdvanceTimer.current) {
       clearTimeout(autoAdvanceTimer.current)
     }
