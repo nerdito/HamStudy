@@ -61,27 +61,6 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     }
   }, [currentIndex, questions, settings.ttsEnabled, settings.ttsAutoRead, settings.ttsSpeed, settings.ttsVoice])
 
-  useEffect(() => {
-    if (settings.ttsEnabled && settings.listeningMode === 'auto' && !isListening && !showResult) {
-      const success = startListening(
-        (answerIndex) => {
-          if (answerIndex >= 0) {
-            handleAnswer(answerIndex)
-          }
-          setIsListening(false)
-        },
-        () => setIsListening(false)
-      )
-      if (success) {
-        setIsListening(true)
-      }
-    }
-  }, [currentIndex, settings.ttsEnabled, settings.listeningMode, showResult, isListening, handleAnswer])
-
-  const handleListeningChange = (listening) => {
-    setIsListening(listening)
-  }
-
   const advanceToNext = useCallback(() => {
     if (currentIndex < questionCount - 1) {
       setCurrentIndex(currentIndex + 1)
@@ -101,6 +80,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     newAnswers[currentIndex] = answerIndex
     setAnswers(newAnswers)
     const currentQuestion = questions[currentIndex]
+    if (!currentQuestion) return
     const isCorrect = answerIndex === currentQuestion.correct
 
     if (settings.srsEnabled) {
@@ -136,6 +116,27 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
       }
     }
   }, [isListening, answers, currentIndex, questions, settings.srsEnabled, mode, mustClickCorrect, isQuickMode, questionCount, updateSRSQuestion, advanceToNext])
+
+  useEffect(() => {
+    if (settings.ttsEnabled && settings.listeningMode === 'auto' && !isListening && !showResult) {
+      const success = startListening(
+        (answerIndex) => {
+          if (answerIndex >= 0) {
+            handleAnswer(answerIndex)
+          }
+          setIsListening(false)
+        },
+        () => setIsListening(false)
+      )
+      if (success) {
+        setIsListening(true)
+      }
+    }
+  }, [currentIndex, settings.ttsEnabled, settings.listeningMode, showResult, isListening, handleAnswer])
+
+  const handleListeningChange = (listening) => {
+    setIsListening(listening)
+  }
 
   const handleNext = () => {
     if (autoAdvanceTimer.current) {
