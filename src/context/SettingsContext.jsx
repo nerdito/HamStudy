@@ -45,7 +45,12 @@ const BOOKMARKS_KEY = 'hamStudyBookmarks'
 const getStoredSettings = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS
+    const parsed = stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS
+    if (parsed.darkMode && !parsed.colorScheme) {
+      parsed.colorScheme = 'dark'
+    }
+    delete parsed.darkMode
+    return parsed
   } catch {
     return DEFAULT_SETTINGS
   }
@@ -126,10 +131,6 @@ export function SettingsProvider({ children }) {
 
   const setShowAnswer = (value) => {
     setSettings(prev => ({ ...prev, showAnswer: value }))
-  }
-
-  const setDarkMode = (value) => {
-    setSettings(prev => ({ ...prev, darkMode: value }))
   }
 
   const setColorScheme = (value) => {
@@ -297,7 +298,6 @@ export function SettingsProvider({ children }) {
       setQuickExam,
       setFontSize,
       setShowAnswer,
-      setDarkMode,
       setColorScheme,
       setTtsEnabled,
       setTtsSpeed,

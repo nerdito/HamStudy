@@ -11,7 +11,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setDarkMode, setColorScheme, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setColorScheme, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
   const [voices, setVoices] = useState([])
 
   useEffect(() => {
@@ -166,21 +166,6 @@ function Settings() {
               type="checkbox"
               checked={settings.showAnswer}
               onChange={(e) => setShowAnswer(e.target.checked)}
-            />
-            <span className="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div className="toggle-group">
-          <label className="toggle-label">
-            <span>Dark Mode</span>
-            <span className="toggle-description">Use dark theme for better low-light viewing</span>
-          </label>
-          <label className="toggle-switch">
-            <input
-              type="checkbox"
-              checked={settings.darkMode}
-              onChange={(e) => setDarkMode(e.target.checked)}
             />
             <span className="toggle-slider"></span>
           </label>
