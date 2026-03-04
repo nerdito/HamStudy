@@ -15,9 +15,9 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute(
       'data-theme',
-      settings.darkMode ? 'dark' : 'light'
+      settings.colorScheme
     )
-  }, [settings.darkMode])
+  }, [settings.colorScheme])
 
   return (
     <div style={{ fontSize }}>
