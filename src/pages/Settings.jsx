@@ -11,7 +11,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setDarkMode, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setColorScheme, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
   const [voices, setVoices] = useState([])
 
   useEffect(() => {
@@ -141,17 +141,19 @@ function Settings() {
 
         <div className="toggle-group">
           <label className="toggle-label">
-            <span>Show Answer in Study</span>
-            <span className="toggle-description">Show correct answer immediately after selecting</span>
+            <span>Color Scheme</span>
           </label>
-          <label className="toggle-switch">
-            <input
-              type="checkbox"
-              checked={settings.showAnswer}
-              onChange={(e) => setShowAnswer(e.target.checked)}
-            />
-            <span className="toggle-slider"></span>
-          </label>
+          <select
+            className="font-size-select"
+            value={settings.colorScheme}
+            onChange={(e) => setColorScheme(e.target.value)}
+          >
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="purple">Purple</option>
+          </select>
         </div>
 
         <div className="toggle-group">
@@ -162,8 +164,8 @@ function Settings() {
           <label className="toggle-switch">
             <input
               type="checkbox"
-              checked={settings.darkMode}
-              onChange={(e) => setDarkMode(e.target.checked)}
+              checked={settings.showAnswer}
+              onChange={(e) => setShowAnswer(e.target.checked)}
             />
             <span className="toggle-slider"></span>
           </label>

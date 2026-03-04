@@ -2,12 +2,12 @@
   box-sizing: border-box;
 }
 
-:root {
+/* Color Scheme: Light (Default) */
+:root, [data-theme='light'] {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   
-  /* Light theme (default) */
   --bg-primary: #f5f5f5;
   --bg-secondary: #ffffff;
   --text-primary: #333333;
@@ -25,6 +25,7 @@
   --link-color: #4a90d9;
 }
 
+/* Color Scheme: Dark */
 [data-theme='dark'] {
   --bg-primary: #1a1a2e;
   --bg-secondary: #16213e;
@@ -41,6 +42,63 @@
   --shadow: rgba(0, 0, 0, 0.3);
   --input-bg: #1a1a2e;
   --link-color: #e94560;
+}
+
+/* Color Scheme: Blue */
+[data-theme='blue'] {
+  --bg-primary: #e3f2fd;
+  --bg-secondary: #ffffff;
+  --text-primary: #1565c0;
+  --text-secondary: #5472d3;
+  --card-bg: #ffffff;
+  --border-color: #90caf9;
+  --button-primary: #1976d2;
+  --button-hover: #1565c0;
+  --correct-bg: #c8e6c9;
+  --correct-text: #2e7d32;
+  --incorrect-bg: #ffcdd2;
+  --incorrect-text: #c62828;
+  --shadow: rgba(25, 118, 210, 0.15);
+  --input-bg: #ffffff;
+  --link-color: #1976d2;
+}
+
+/* Color Scheme: Green */
+[data-theme='green'] {
+  --bg-primary: #e8f5e9;
+  --bg-secondary: #ffffff;
+  --text-primary: #2e7d32;
+  --text-secondary: #43a047;
+  --card-bg: #ffffff;
+  --border-color: #a5d6a7;
+  --button-primary: #43a047;
+  --button-hover: #388e3c;
+  --correct-bg: #c8e6c9;
+  --correct-text: #1b5e20;
+  --incorrect-bg: #ffcdd2;
+  --incorrect-text: #b71c1c;
+  --shadow: rgba(67, 160, 71, 0.15);
+  --input-bg: #ffffff;
+  --link-color: #43a047;
+}
+
+/* Color Scheme: Purple */
+[data-theme='purple'] {
+  --bg-primary: #f3e5f5;
+  --bg-secondary: #ffffff;
+  --text-primary: #7b1fa2;
+  --text-secondary: #9c27b0;
+  --card-bg: #ffffff;
+  --border-color: #ce93d8;
+  --button-primary: #8e24aa;
+  --button-hover: #7b1fa2;
+  --correct-bg: #e1bee7;
+  --correct-text: #4a148c;
+  --incorrect-bg: #ffcdd2;
+  --incorrect-text: #b71c1c;
+  --shadow: rgba(142, 36, 170, 0.15);
+  --input-bg: #ffffff;
+  --link-color: #8e24aa;
 }
 
 body {
