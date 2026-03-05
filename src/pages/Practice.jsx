@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import LicenseSelector from '../components/LicenseSelector'
 import Exam from '../components/Exam'
 import { questionPools } from '../data'
+import { ArrowLeft } from 'lucide-react'
 import './Practice.css'
 
 const PRACTICE_QUESTION_COUNTS = {
@@ -40,7 +41,10 @@ function Practice() {
           onSelect={handleLicenseSelect} 
           title="Select License Class for Practice"
         />
-        <Link to="/" className="back-button">Back to Home</Link>
+        <Link to="/" className="back-button">
+          <ArrowLeft size={18} />
+          Back to Home
+        </Link>
       </div>
     )
   }

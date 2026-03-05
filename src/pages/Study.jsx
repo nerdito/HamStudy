@@ -5,6 +5,7 @@ import Exam from '../components/Exam'
 import { questionPools } from '../data'
 import { useSettings } from '../context/SettingsContext'
 import { getCategories, getCategoryLabel, filterQuestionsByCategory } from '../utils/categories'
+import { ArrowLeft } from 'lucide-react'
 import './Study.css'
 
 function Study() {
@@ -58,7 +59,10 @@ function Study() {
           onSelect={handleLicenseSelect} 
           title="Select License Class for Study"
         />
-        <Link to="/" className="back-button">Back to Home</Link>
+        <Link to="/" className="back-button">
+          <ArrowLeft size={18} />
+          Back to Home
+        </Link>
       </div>
     )
   }

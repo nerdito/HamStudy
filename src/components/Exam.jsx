@@ -3,6 +3,7 @@ import QuestionCard from './QuestionCard'
 import ExamResults from './ExamResults'
 import { useSettings } from '../context/SettingsContext'
 import { speakQuestionWithLetters, stop, startListening, stopListening } from '../utils/tts'
+import { ArrowLeft, ArrowRight, X } from 'lucide-react'
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
@@ -204,7 +205,8 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     <div className="exam-container">
       <div className="exam-header">
         <button className="back-link" onClick={onBack}>
-          ← Exit Exam
+          <X size={18} />
+          Exit
         </button>
         <span className="question-counter">
           Question {currentIndex + 1} of {questionCount}
@@ -230,6 +232,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
           onClick={handlePrevious}
           disabled={!canGoPrevious}
         >
+          <ArrowLeft size={18} />
           Previous
         </button>
         
@@ -240,6 +243,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
             disabled={!showResult}
           >
             {currentIndex === questionCount - 1 ? 'Finish' : 'Next Question'}
+            {currentIndex < questionCount - 1 && <ArrowRight size={18} />}
           </button>
         )}
 
@@ -250,6 +254,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
             disabled={answers[currentIndex] === null}
           >
             {currentIndex === questionCount - 1 ? 'Finish' : 'Next Question'}
+            {currentIndex < questionCount - 1 && <ArrowRight size={18} />}
           </button>
         )}
       </div>

@@ -4,123 +4,181 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 2rem;
+  padding: var(--space-xl);
 }
 
 .title-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
 }
 
 .home-logo {
-  width: 80px;
+  width: 100px;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px var(--shadow);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-normal);
+}
+
+.home-logo:hover {
+  transform: scale(1.05) rotate(-2deg);
 }
 
 .home-container h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
   color: var(--text-primary);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-md);
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
 }
 
 .home-button {
-  display: block;
-  padding: 1.25rem 2rem;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  font-size: 1.125rem;
   font-weight: 600;
   text-align: center;
   text-decoration: none;
   color: white;
-  background-color: var(--button-primary);
+  background: var(--gradient-primary);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.home-button:hover::before {
+  left: 100%;
 }
 
 .home-button:hover {
-  background-color: var(--button-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
 }
 
 .home-button:active {
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
+}
+
+.home-button svg {
+  width: 22px;
+  height: 22px;
 }
 
 .progress-section {
-  margin-top: 3rem;
+  margin-top: var(--space-2xl);
   width: 100%;
-  max-width: 600px;
+  max-width: 640px;
 }
 
 .progress-section h2 {
   font-size: 1.5rem;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
   text-align: center;
+  font-weight: 600;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .stat-card {
-  background: var(--card-bg);
-  padding: 1rem;
-  border-radius: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
   text-align: center;
-  box-shadow: 0 2px 8px var(--shadow);
-  transition: background-color 0.3s ease;
+  box-shadow: var(--shadow);
+  transition: all var(--transition-normal);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .stat-value {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: var(--button-primary);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  margin-top: 0.25rem;
+  margin-top: var(--space-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .recent-exams h3 {
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-md);
+  font-weight: 600;
 }
 
 .exam-list {
-  background: var(--card-bg);
-  border-radius: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 2px 8px var(--shadow);
-  transition: background-color 0.3s ease;
+  box-shadow: var(--shadow);
 }
 
 .exam-item {
   display: grid;
   grid-template-columns: 1fr 1fr 0.75fr 1.25fr;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
   align-items: center;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color var(--transition-fast);
+}
+
+.exam-item:hover {
+  background-color: var(--bg-tertiary);
 }
 
 .exam-item:last-child {
@@ -134,29 +192,32 @@
 
 .exam-score {
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .exam-result {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .exam-result.passed {
-  background-color: var(--correct-bg);
-  color: var(--correct-text);
+  background: var(--gradient-success);
+  color: white;
 }
 
 .exam-result.failed {
-  background-color: var(--incorrect-bg);
-  color: var(--incorrect-text);
+  background: var(--gradient-danger);
+  color: white;
 }
 
 .exam-date {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-size: 0.75rem;
+  color: var(--text-muted);
   text-align: right;
 }
 
@@ -164,8 +225,28 @@
   color: var(--button-primary);
   text-decoration: none;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .stats-link:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .home-container h1 {
+    font-size: 1.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .exam-item {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+  
+  .exam-date {
+    display: none;
+  }
 }

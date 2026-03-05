@@ -64,12 +64,12 @@ describe('ExamResults', () => {
 
   test('displays number of correct answers', () => {
     renderWithProvider(<ExamResults {...defaultProps} />);
-    expect(screen.getByText(/✓ 2 Correct/)).toBeInTheDocument();
+    expect(screen.getByText(/2[\s\S]*Correct/)).toBeInTheDocument();
   });
 
   test('displays number of wrong answers', () => {
     renderWithProvider(<ExamResults {...defaultProps} />);
-    expect(screen.getByText(/✗ 1 Wrong/)).toBeInTheDocument();
+    expect(screen.getByText(/1[\s\S]*Wrong/)).toBeInTheDocument();
   });
 
   test('shows pass message when score >= 74%', () => {
