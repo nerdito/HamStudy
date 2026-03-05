@@ -48,6 +48,52 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
     }
   }, [])
 
+  const handleAnswer = useCallback((answerIndex) => {
+    if (isListening) {
+      stopListening()
+      setIsListening(false)
+    }
+    const newAnswers = [...answers]
+    newAnswers[currentIndex] = answerIndex
+    setAnswers(newAnswers)
+    const currentQuestion = questions[currentIndex]
+    if (!currentQuestion) return
+    const isCorrect = answerIndex === currentQuestion.correct
+
+    if (settings.srsEnabled) {
+      updateSRSQuestion(currentQuestion.id, isCorrect)
+    }
+
+    if (mode === 'study') {
+      if (mustClickCorrect) {
+        if (isCorrect) {
+          advanceToNext()
+        }
+        return
+      }
+
+      setShowResult(true)
+      
+      if (isCorrect) {
+        if (isQuickMode) {
+          autoAdvanceTimer.current = setTimeout(advanceToNext, 500)
+        }
+      } else {
+        setMustClickCorrect(true)
+      }
+    } else {
+      if (currentIndex < questionCount - 1) {
+        if (isQuickMode) {
+          autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
+        } else {
+          setCurrentIndex(currentIndex + 1)
+        }
+      } else {
+        setIsComplete(true)
+      }
+    }
+  }, [isListening, answers, currentIndex, questions, settings.srsEnabled, mode, mustClickCorrect, isQuickMode, questionCount, updateSRSQuestion, advanceToNext])
+
   useEffect(() => {
     if (questions.length > 0 && settings.ttsEnabled && settings.ttsAutoRead) {
       const currentQuestion = questions[currentIndex]
@@ -92,51 +138,6 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
       setIsComplete(true)
     }
   }, [currentIndex, questionCount])
-
-  const handleAnswer = useCallback((answerIndex) => {
-    if (isListening) {
-      stopListening()
-      setIsListening(false)
-    }
-    const newAnswers = [...answers]
-    newAnswers[currentIndex] = answerIndex
-    setAnswers(newAnswers)
-    const currentQuestion = questions[currentIndex]
-    const isCorrect = answerIndex === currentQuestion.correct
-
-    if (settings.srsEnabled) {
-      updateSRSQuestion(currentQuestion.id, isCorrect)
-    }
-
-    if (mode === 'study') {
-      if (mustClickCorrect) {
-        if (isCorrect) {
-          advanceToNext()
-        }
-        return
-      }
-
-      setShowResult(true)
-      
-      if (isCorrect) {
-        if (isQuickMode) {
-          autoAdvanceTimer.current = setTimeout(advanceToNext, 500)
-        }
-      } else {
-        setMustClickCorrect(true)
-      }
-    } else {
-      if (currentIndex < questionCount - 1) {
-        if (isQuickMode) {
-          autoAdvanceTimer.current = setTimeout(advanceToNext, 0)
-        } else {
-          setCurrentIndex(currentIndex + 1)
-        }
-      } else {
-        setIsComplete(true)
-      }
-    }
-  }, [isListening, answers, currentIndex, questions, settings.srsEnabled, mode, mustClickCorrect, isQuickMode, questionCount, updateSRSQuestion, advanceToNext])
 
   const handleNext = () => {
     if (autoAdvanceTimer.current) {
