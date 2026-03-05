@@ -19,6 +19,16 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
 
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
 
+  const advanceToNext = useCallback(() => {
+    if (currentIndex < questionCount - 1) {
+      setCurrentIndex(currentIndex + 1)
+      setShowResult(false)
+      setMustClickCorrect(false)
+    } else {
+      setIsComplete(true)
+    }
+  }, [currentIndex, questionCount])
+
   useEffect(() => {
     if (!allQuestions || allQuestions.length === 0) {
       setQuestions([])
@@ -128,16 +138,6 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const handleListeningChange = (listening) => {
     setIsListening(listening)
   }
-
-  const advanceToNext = useCallback(() => {
-    if (currentIndex < questionCount - 1) {
-      setCurrentIndex(currentIndex + 1)
-      setShowResult(false)
-      setMustClickCorrect(false)
-    } else {
-      setIsComplete(true)
-    }
-  }, [currentIndex, questionCount])
 
   const handleNext = () => {
     if (autoAdvanceTimer.current) {
