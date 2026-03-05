@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import logo from '../assets/logo.png'
+import { BookOpen, ClipboardList, Layers, Settings, TrendingUp } from 'lucide-react'
 import './Home.css'
 
 const LICENSE_NAMES = {
@@ -41,10 +42,22 @@ function Home() {
         <h1>Ham Radio Test Practice</h1>
       </div>
       <div className="button-container">
-        <Link to="/study" className="home-button">Study</Link>
-        <Link to="/practice" className="home-button">Practice Exam</Link>
-        <Link to="/flashcards" className="home-button">Flashcards</Link>
-        <Link to="/settings" className="home-button">Settings</Link>
+        <Link to="/study" className="home-button">
+          <BookOpen />
+          Study
+        </Link>
+        <Link to="/practice" className="home-button">
+          <ClipboardList />
+          Practice Exam
+        </Link>
+        <Link to="/flashcards" className="home-button">
+          <Layers />
+          Flashcards
+        </Link>
+        <Link to="/settings" className="home-button">
+          <Settings />
+          Settings
+        </Link>
       </div>
 
       {examHistory.length > 0 && (
@@ -92,12 +105,14 @@ function Home() {
                   <div className="stat-value">{licenseStats?.extra || 0}</div>
                   <div className="stat-label">Extra Exams</div>
                 </div>
-                <div className="stat-card">
-                  <div className="stat-value">
-                    <Link to="/stats" className="stats-link">View All →</Link>
+                  <div className="stat-card">
+                    <div className="stat-value">
+                      <Link to="/stats" className="stats-link">
+                        <TrendingUp size={24} />
+                      </Link>
+                    </div>
+                    <div className="stat-label">Detailed Stats</div>
                   </div>
-                  <div className="stat-label">Detailed Stats</div>
-                </div>
               </div>
             </>
           )}

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import { getVoices, isRecognitionSupported } from '../utils/tts'
 import { useState, useEffect } from 'react'
+import { ArrowLeft, Trash2 } from 'lucide-react'
 import './Settings.css'
 
 const LICENSE_NAMES = {
@@ -290,11 +291,15 @@ function Settings() {
 
       <div className="settings-section">
         <button className="reset-button" onClick={clearExamHistory}>
+          <Trash2 size={18} />
           Clear Progress
         </button>
       </div>
 
-      <Link to="/" className="back-button">Back to Home</Link>
+      <Link to="/" className="back-button">
+        <ArrowLeft size={18} />
+        Back to Home
+      </Link>
     </div>
   )
 }

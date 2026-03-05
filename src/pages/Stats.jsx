@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
+import { ArrowLeft } from 'lucide-react'
 import './Stats.css'
 
 const LICENSE_NAMES = {
@@ -59,7 +60,10 @@ function Stats() {
       <div className="page-container stats-page">
         <h1>Statistics</h1>
         <p className="no-data">No exam history yet. Complete some exams to see your statistics!</p>
-        <Link to="/" className="back-button">Back to Home</Link>
+        <Link to="/" className="back-button">
+          <ArrowLeft size={18} />
+          Back to Home
+        </Link>
       </div>
     )
   }
