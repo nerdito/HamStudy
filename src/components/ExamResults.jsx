@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
+import { CheckCircle, XCircle, Home, RotateCcw, AlertCircle } from 'lucide-react'
 import './ExamResults.css'
 
 function ExamResults({ correct, total, questions, answers, license, onRestart }) {
@@ -37,8 +38,8 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
       <div className="score-display">
         <div className="score-percentage">{percentage}%</div>
         <div className="score-details">
-          <span className="correct-count">✓ {correct} Correct</span>
-          <span className="wrong-count">✗ {wrongCount} Wrong</span>
+          <span className="correct-count"><CheckCircle size={20} /> {correct} Correct</span>
+          <span className="wrong-count"><XCircle size={20} /> {wrongCount} Wrong</span>
         </div>
       </div>
       <div className="result-message">
@@ -54,6 +55,7 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
           className="view-incorrect-button"
           onClick={() => setShowIncorrect(!showIncorrect)}
         >
+          <AlertCircle size={18} />
           {showIncorrect ? 'Hide Incorrect' : `View ${wrongCount} Incorrect`}
         </button>
       )}
@@ -82,9 +84,11 @@ function ExamResults({ correct, total, questions, answers, license, onRestart })
 
       <div className="result-buttons">
         <button className="restart-button" onClick={onRestart}>
+          <RotateCcw size={18} />
           Restart
         </button>
         <button className="home-button" onClick={handleBackHome}>
+          <Home size={18} />
           Back Home
         </button>
       </div>

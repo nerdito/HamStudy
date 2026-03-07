@@ -2,6 +2,7 @@ import './QuestionCard.css'
 import { useContext, useEffect, useState } from 'react'
 import { SettingsContext } from '../context/SettingsContext'
 import { stop, isSpeaking, speakQuestionWithLetters, startListening, stopListening } from '../utils/tts'
+import { Volume2, VolumeX, Mic, MicOff, Star } from 'lucide-react'
 
 function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClickCorrect, showAnswer, onListeningChange, isBookmarked, onToggleBookmark }) {
   const settingsContext = useContext(SettingsContext)
@@ -117,7 +118,7 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
               onClick={() => onToggleBookmark(question.id)}
               title={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}
             >
-              {isBookmarked ? '★' : '☆'}
+              <Star size={18} fill={isBookmarked ? '#ffc107' : 'none'} />
             </button>
           )}
           {settings.ttsEnabled && (
@@ -127,7 +128,7 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
               title={isReading ? 'Stop reading' : 'Read question aloud'}
               onMouseLeave={handleReadQuestionEnd}
             >
-              {isReading ? '⏹' : '🔊'}
+              {isReading ? <VolumeX size={18} /> : <Volume2 size={18} />}
             </button>
           )}
           {showMicButton && (
@@ -136,7 +137,7 @@ function QuestionCard({ question, selectedAnswer, onAnswer, showResult, mustClic
               onClick={handleMicClick}
               title={isListeningActive ? 'Stop listening' : 'Answer with voice'}
             >
-              🎤
+              {isListeningActive ? <MicOff size={18} /> : <Mic size={18} />}
             </button>
           )}
         </div>

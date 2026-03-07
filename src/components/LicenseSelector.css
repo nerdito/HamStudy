@@ -2,37 +2,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: var(--space-xl);
+  width: 100%;
 }
 
 .license-selector h2 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-2xl);
   font-size: 1.5rem;
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .license-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-md);
   width: 100%;
-  max-width: 300px;
+  max-width: 340px;
 }
 
 .license-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.25rem 2rem;
-  border: 2px solid var(--button-primary);
-  border-radius: 8px;
-  background-color: var(--card-bg);
+  padding: var(--space-xl);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
 
 .license-button:hover {
-  background-color: var(--button-primary);
+  border-color: var(--button-primary);
+  background: var(--gradient-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
 
 .license-button:hover .license-name,
@@ -41,13 +47,14 @@
 }
 
 .license-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--button-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .license-description {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  margin-top: 0.25rem;
+  margin-top: var(--space-xs);
+  font-weight: 500;
 }
