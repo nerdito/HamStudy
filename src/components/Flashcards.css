@@ -1,19 +1,35 @@
 .flashcards-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--space-xl);
+  animation: fadeIn var(--transition-normal) ease-out;
 }
 
 .flashcards-header {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
 .flashcards-header h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.license-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--gradient-primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
 }
 
 .flashcards-controls {

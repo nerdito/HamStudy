@@ -89,7 +89,9 @@ function Flashcards({ questions: allQuestions, license, onBack }) {
     <div className="flashcards-container">
       <div className="flashcards-header">
         <button className="back-link" onClick={onBack}>← Back</button>
-        <h1>Flashcards - {LICENSE_NAMES[license]}</h1>
+        <span className="license-indicator">
+          {LICENSE_NAMES[license]}
+        </span>
       </div>
 
       <div className="flashcards-controls">
