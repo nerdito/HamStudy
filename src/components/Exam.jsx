@@ -201,13 +201,24 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const currentQuestion = questions[currentIndex]
   const canGoPrevious = currentIndex > 0
 
+  const LICENSE_NAMES = {
+    technician: 'Technician',
+    general: 'General',
+    extra: 'Extra'
+  }
+
   return (
     <div className="exam-container">
       <div className="exam-header">
-        <button className="back-link" onClick={onBack}>
-          <X size={18} />
-          Exit
-        </button>
+        <div className="exam-header-left">
+          <button className="back-link" onClick={onBack}>
+            <X size={18} />
+            Exit
+          </button>
+          <span className="license-indicator">
+            {LICENSE_NAMES[license] || license}
+          </span>
+        </div>
         <span className="question-counter">
           Question {currentIndex + 1} of {questionCount}
         </span>

@@ -5,12 +5,13 @@ import Exam from '../components/Exam'
 import { questionPools } from '../data'
 import { useSettings } from '../context/SettingsContext'
 import { getCategories, getCategoryLabel, filterQuestionsByCategory } from '../utils/categories'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ChevronDown, ChevronUp, Filter } from 'lucide-react'
 import './Study.css'
 
 function Study() {
   const [selectedLicense, setSelectedLicense] = useState(null)
   const [selectedCategories, setSelectedCategories] = useState([])
+  const [showFilters, setShowFilters] = useState(false)
   const { settings } = useSettings()
 
   const handleLicenseSelect = (licenseId) => {
@@ -70,29 +71,42 @@ function Study() {
   return (
     <div className="study-container">
       <div className="category-filter">
-        <div className="category-header">
-          <span>Filter by Category:</span>
-          {selectedCategories.length > 0 && (
-            <button className="clear-filter-btn" onClick={handleClearCategories}>
-              Clear All
-            </button>
-          )}
-        </div>
-        <div className="category-chips">
-          {availableCategories.map(category => (
-            <button
-              key={category}
-              className={`category-chip ${selectedCategories.includes(category) ? 'selected' : ''}`}
-              onClick={() => handleCategoryToggle(category)}
-            >
-              {category}: {getCategoryLabel(category)}
-            </button>
-          ))}
-        </div>
-        {selectedCategories.length > 0 && (
-          <div className="filter-info">
-            Showing {filteredQuestions.length} of {questionPools[selectedLicense].length} questions
-          </div>
+        <button 
+          className="category-filter-toggle"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <Filter size={16} />
+          <span>{showFilters ? 'Hide Filters' : 'Show Filters'}</span>
+          {showFilters ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        </button>
+        
+        {showFilters && (
+          <>
+            <div className="category-header">
+              <span>Filter by Category:</span>
+              {selectedCategories.length > 0 && (
+                <button className="clear-filter-btn" onClick={handleClearCategories}>
+                  Clear All
+                </button>
+              )}
+            </div>
+            <div className="category-chips">
+              {availableCategories.map(category => (
+                <button
+                  key={category}
+                  className={`category_chip ${selectedCategories.includes(category) ? 'selected' : ''}`}
+                  onClick={() => handleCategoryToggle(category)}
+                >
+                  {category}: {getCategoryLabel(category)}
+                </button>
+              ))}
+            </div>
+            {selectedCategories.length > 0 && (
+              <div className="filter-info">
+                Showing {filteredQuestions.length} of {questionPools[selectedLicense].length} questions
+              </div>
+            )}
+          </>
         )}
       </div>
       <Exam
