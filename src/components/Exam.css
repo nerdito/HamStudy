@@ -25,6 +25,25 @@
   box-shadow: var(--shadow);
 }
 
+.exam-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.license-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--gradient-primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+}
+
 .back-link {
   display: flex;
   align-items: center;
