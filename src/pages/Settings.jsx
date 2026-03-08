@@ -159,8 +159,8 @@ function Settings() {
 
         <div className="toggle-group">
           <label className="toggle-label">
-            <span>Dark Mode</span>
-            <span className="toggle-description">Use dark theme for better low-light viewing</span>
+            <span>Show Answer</span>
+            <span className="toggle-description">Show correct answer after answering in Study mode</span>
           </label>
           <label className="toggle-switch">
             <input
