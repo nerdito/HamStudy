@@ -14,7 +14,6 @@ const DEFAULT_SETTINGS = {
   fontSize: 'medium',
   colorScheme: 'light',
   showAnswer: false,
-  darkMode: false,
   ttsEnabled: false,
   ttsSpeed: 1.0,
   ttsVoice: '',
