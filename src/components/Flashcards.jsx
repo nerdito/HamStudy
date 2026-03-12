@@ -15,7 +15,11 @@ function Flashcards({ questions: allQuestions, license, onBack }) {
   const [knownCards, setKnownCards] = useState(new Set())
 
   const shuffle = useCallback(() => {
-    const shuffledQuestions = [...initialQuestions].sort(() => Math.random() - 0.5)
+    const shuffledQuestions = [...initialQuestions]
+    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]]
+    }
     setDisplayQuestions(shuffledQuestions)
     setCurrentIndex(0)
     setKnownCards(new Set())
