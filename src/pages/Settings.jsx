@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
 import { getVoices, isRecognitionSupported } from '../utils/tts'
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Trash2 } from 'lucide-react'
+import { ArrowLeft, Trash2, Github } from 'lucide-react'
 import './Settings.css'
 
 const LICENSE_NAMES = {
@@ -296,6 +296,13 @@ function Settings() {
           <Trash2 size={18} />
           Clear Progress
         </button>
+      </div>
+
+      <div className="settings-section github-link">
+        <a href="https://github.com/nerdito/HamStudy" target="_blank" rel="noopener noreferrer">
+          <Github size={18} />
+          <span>HamStudy is open source - contribute on GitHub</span>
+        </a>
       </div>
 
       <Link to="/" className="back-button">
