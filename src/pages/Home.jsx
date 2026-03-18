@@ -38,8 +38,8 @@ function Home() {
   return (
     <div className="home-container">
       <div className="title-container">
+        <h1>Ham Radio Learning</h1>
         <img src={logo} alt="Logo" className="home-logo" />
-        <h1>Ham Radio Test Practice</h1>
       </div>
       <div className="button-container">
         <Link to="/study" className="home-button">
