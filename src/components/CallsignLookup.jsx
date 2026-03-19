@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, MapPin, Loader2 } from 'lucide-react'
+import { Search, MapPin, User, Grid, Loader2 } from 'lucide-react'
 import { lookupCallsign } from '../utils/callsignLookup'
 import './CallsignLookup.css'
 
@@ -32,7 +32,7 @@ function CallsignLookup() {
     <div className="callsign-lookup-section">
       <h2>Callsign Lookup</h2>
       <p className="callsign-description">
-        Enter a ham radio callsign to find the country and flag associated with it.
+        Enter a ham radio callsign to find the country, flag, and other info.
       </p>
       
       <form onSubmit={handleSearch} className="callsign-form">
@@ -67,16 +67,34 @@ function CallsignLookup() {
           <div className="callsign-header">
             <span className="callsign-name">{result.callsign}</span>
           </div>
-          {result.flagUrl && (
-            <img 
-              src={result.flagUrl} 
-              alt={`${result.country} flag`} 
-              className="callsign-flag"
-            />
-          )}
-          <div className="callsign-country">
-            <MapPin size={20} />
-            <span>{result.country || 'Country not available'}</span>
+          
+          <div className="callsign-details">
+            {result.flagUrl && (
+              <img 
+                src={result.flagUrl} 
+                alt={`${result.country} flag`} 
+                className="callsign-flag"
+              />
+            )}
+            
+            <div className="callsign-info-row">
+              <MapPin size={18} />
+              <span>{result.country || 'Unknown'}{result.state && result.state !== 'PR' ? `, ${result.state}` : ''}</span>
+            </div>
+            
+            {result.name && (
+              <div className="callsign-info-row">
+                <User size={18} />
+                <span>{result.name}</span>
+              </div>
+            )}
+            
+            {result.grid && (
+              <div className="callsign-info-row">
+                <Grid size={18} />
+                <span>{result.grid}</span>
+              </div>
+            )}
           </div>
         </div>
       )}

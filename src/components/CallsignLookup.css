@@ -143,24 +143,29 @@
 }
 
 .callsign-flag {
-  width: 64px;
+  width: 80px;
   height: auto;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
-.callsign-country {
+.callsign-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.callsign-info-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1rem;
   color: var(--text-primary);
 }
 
-.callsign-country svg {
+.callsign-info-row svg {
   color: var(--button-primary);
 }
 
