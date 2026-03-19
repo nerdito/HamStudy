@@ -17,11 +17,7 @@ const COUNTRY_TO_FLAG = {
   'China': 'https://flagcdn.com/w80/cn.png',
   'India': 'https://flagcdn.com/w80/in.png',
   'Puerto Rico': 'https://flagcdn.com/w80/pr.png',
-  'Alaska': 'https://flagcdn.com/w80/us.png',
-  'Hawaii': 'https://flagcdn.com/w80/us.png',
 };
-
-const DXCC_TO_FLAG = {};
 
 function getFlagForCountry(country) {
   if (!country) return null;
@@ -95,9 +91,9 @@ export async function lookupCallsign(callsign) {
     if (data.hamdb && data.hamdb.callsign) {
       const info = data.hamdb.callsign;
       let country = info.country || null;
-      let state = info.state || null;
+      const state = info.state || null;
       
-      if (state === 'PR' || (state && state !== 'AA')) {
+      if (state === 'PR') {
         country = 'Puerto Rico';
       }
       
@@ -109,6 +105,8 @@ export async function lookupCallsign(callsign) {
         state,
         name: info.fname && info.name ? `${info.fname} ${info.name}` : (info.fname || info.name || null),
         grid: info.grid || null,
+        clss: info.class || null,
+        expires: info.expires || null,
         flagUrl,
         success: true
       };

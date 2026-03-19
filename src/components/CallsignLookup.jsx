@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, MapPin, User, Grid, Loader2 } from 'lucide-react'
+import { Search, MapPin, User, Grid, Loader2, Calendar, Award } from 'lucide-react'
 import { lookupCallsign } from '../utils/callsignLookup'
 import './CallsignLookup.css'
 
@@ -26,6 +26,12 @@ function CallsignLookup() {
     } else {
       setError(lookupResult.error || 'Callsign not found. Make sure you entered a valid callsign.')
     }
+  }
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return null;
+    const [month, day, year] = dateStr.split('/');
+    return `${month}/${day}/${year}`;
   }
 
   return (
@@ -79,7 +85,10 @@ function CallsignLookup() {
             
             <div className="callsign-info-row">
               <MapPin size={18} />
-              <span>{result.country || 'Unknown'}{result.state && result.state !== 'PR' ? `, ${result.state}` : ''}</span>
+              <span>
+                {result.country || 'Unknown'}
+                {result.state && result.state !== 'PR' ? `, ${result.state}` : ''}
+              </span>
             </div>
             
             {result.name && (
@@ -93,6 +102,20 @@ function CallsignLookup() {
               <div className="callsign-info-row">
                 <Grid size={18} />
                 <span>{result.grid}</span>
+              </div>
+            )}
+            
+            {result.clss && (
+              <div className="callsign-info-row">
+                <Award size={18} />
+                <span>Class: {result.clss}</span>
+              </div>
+            )}
+            
+            {result.expires && (
+              <div className="callsign-info-row">
+                <Calendar size={18} />
+                <span>Expires: {formatDate(result.expires)}</span>
               </div>
             )}
           </div>
