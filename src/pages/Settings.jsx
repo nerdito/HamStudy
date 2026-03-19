@@ -3,6 +3,7 @@ import { useSettings } from '../context/SettingsContext'
 import { getVoices, isRecognitionSupported } from '../utils/tts'
 import { useState, useEffect } from 'react'
 import { ArrowLeft, Trash2, Github } from 'lucide-react'
+import CallsignLookup from '../components/CallsignLookup'
 import './Settings.css'
 
 const LICENSE_NAMES = {
@@ -85,6 +86,8 @@ function Settings() {
           ))}
         </div>
       </div>
+
+      <CallsignLookup />
 
       <div className="settings-section">
         <h2>Quick Mode Settings</h2>

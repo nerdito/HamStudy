@@ -1,0 +1,180 @@
+.callsign-lookup-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow);
+}
+
+.callsign-lookup-section h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  font-weight: 600;
+}
+
+.callsign-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.callsign-form {
+  width: 100%;
+}
+
+.callsign-input-group {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.callsign-input {
+  flex: 1;
+  padding: var(--space-md) var(--space-lg);
+  font-size: 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color var(--transition-fast);
+}
+
+.callsign-input:focus {
+  outline: none;
+  border-color: var(--button-primary);
+}
+
+.callsign-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.callsign-search-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+
+.callsign-search-btn:hover:not(:disabled) {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.callsign-search-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.callsign-search-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.callsign-search-btn .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.callsign-error {
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--gradient-danger);
+  color: white;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  text-align: center;
+}
+
+.callsign-result {
+  margin-top: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.callsign-header {
+  margin-bottom: var(--space-md);
+}
+
+.callsign-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.callsign-flag {
+  width: 80px;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-lg);
+}
+
+.callsign-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.callsign-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.callsign-info-row svg {
+  color: var(--button-primary);
+}
+
+@media (max-width: 640px) {
+  .callsign-input-group {
+    flex-direction: column;
+  }
+  
+  .callsign-search-btn {
+    justify-content: center;
+  }
+}
