@@ -1,33 +1,11 @@
-const STATE_TO_COUNTRY = {
-  'PR': { country: 'Puerto Rico', code: 'PR', flag: '🇵🇷' },
-  'US': { country: 'United States', code: 'US', flag: '🇺🇸' },
-  'AK': { country: 'United States', code: 'US', flag: '🇺🇸' },
-  'HI': { country: 'United States', code: 'US', flag: '🇺🇸' },
-};
-
-const CODE_TO_FLAG = {
-  'PR': 'https://flagcdn.com/w80/cw.png',
-  'US': 'https://flagcdn.com/w80/us.png',
-  'CA': 'https://flagcdn.com/w80/ca.png',
-  'MX': 'https://flagcdn.com/w80/mx.png',
-  'GB': 'https://flagcdn.com/w80/gb.png',
-  'DE': 'https://flagcdn.com/w80/de.png',
-  'FR': 'https://flagcdn.com/w80/fr.png',
-  'ES': 'https://flagcdn.com/w80/es.png',
-  'IT': 'https://flagcdn.com/w80/it.png',
-  'JP': 'https://flagcdn.com/w80/jp.png',
-  'AU': 'https://flagcdn.com/w80/au.png',
-  'BR': 'https://flagcdn.com/w80/br.png',
-  'RU': 'https://flagcdn.com/w80/ru.png',
-  'CN': 'https://flagcdn.com/w80/cn.png',
-  'IN': 'https://flagcdn.com/w80/in.png',
-};
-
 const COUNTRY_TO_FLAG = {
   'United States': 'https://flagcdn.com/w80/us.png',
   'Canada': 'https://flagcdn.com/w80/ca.png',
   'Mexico': 'https://flagcdn.com/w80/mx.png',
   'United Kingdom': 'https://flagcdn.com/w80/gb.png',
+  'England': 'https://flagcdn.com/w80/gb.png',
+  'Scotland': 'https://flagcdn.com/w80/gb.png',
+  'Wales': 'https://flagcdn.com/w80/gb.png',
   'Germany': 'https://flagcdn.com/w80/de.png',
   'France': 'https://flagcdn.com/w80/fr.png',
   'Spain': 'https://flagcdn.com/w80/es.png',
@@ -38,21 +16,67 @@ const COUNTRY_TO_FLAG = {
   'Russia': 'https://flagcdn.com/w80/ru.png',
   'China': 'https://flagcdn.com/w80/cn.png',
   'India': 'https://flagcdn.com/w80/in.png',
-  'Puerto Rico': 'https://flagcdn.com/w80/cw.png',
-  'England': 'https://flagcdn.com/w80/gb.png',
-  'Scotland': 'https://flagcdn.com/w80/gb.png',
-  'Wales': 'https://flagcdn.com/w80/gb.png',
+  'Puerto Rico': 'https://flagcdn.com/w80/pr.png',
+  'Alaska': 'https://flagcdn.com/w80/us.png',
+  'Hawaii': 'https://flagcdn.com/w80/us.png',
 };
 
+const DXCC_TO_FLAG = {};
+
 function getFlagForCountry(country) {
+  if (!country) return null;
+  
   if (COUNTRY_TO_FLAG[country]) {
     return COUNTRY_TO_FLAG[country];
   }
   
-  for (const [key, url] of Object.entries(CODE_TO_FLAG)) {
-    if (country && country.toLowerCase().includes(key.toLowerCase())) {
-      return url;
-    }
+  const countryLower = country.toLowerCase();
+  
+  if (countryLower.includes('puerto rico')) {
+    return 'https://flagcdn.com/w80/pr.png';
+  }
+  if (countryLower.includes('united states') || countryLower.includes('usa')) {
+    return 'https://flagcdn.com/w80/us.png';
+  }
+  if (countryLower.includes('canada')) {
+    return 'https://flagcdn.com/w80/ca.png';
+  }
+  if (countryLower.includes('mexico')) {
+    return 'https://flagcdn.com/w80/mx.png';
+  }
+  if (countryLower.includes('united kingdom') || countryLower.includes('england') || 
+      countryLower.includes('scotland') || countryLower.includes('wales')) {
+    return 'https://flagcdn.com/w80/gb.png';
+  }
+  if (countryLower.includes('germany')) {
+    return 'https://flagcdn.com/w80/de.png';
+  }
+  if (countryLower.includes('france')) {
+    return 'https://flagcdn.com/w80/fr.png';
+  }
+  if (countryLower.includes('spain')) {
+    return 'https://flagcdn.com/w80/es.png';
+  }
+  if (countryLower.includes('italy')) {
+    return 'https://flagcdn.com/w80/it.png';
+  }
+  if (countryLower.includes('japan')) {
+    return 'https://flagcdn.com/w80/jp.png';
+  }
+  if (countryLower.includes('australia')) {
+    return 'https://flagcdn.com/w80/au.png';
+  }
+  if (countryLower.includes('brazil')) {
+    return 'https://flagcdn.com/w80/br.png';
+  }
+  if (countryLower.includes('russia')) {
+    return 'https://flagcdn.com/w80/ru.png';
+  }
+  if (countryLower.includes('china')) {
+    return 'https://flagcdn.com/w80/cn.png';
+  }
+  if (countryLower.includes('india')) {
+    return 'https://flagcdn.com/w80/in.png';
   }
   
   return null;
@@ -73,7 +97,7 @@ export async function lookupCallsign(callsign) {
       let country = info.country || null;
       let state = info.state || null;
       
-      if (state === 'PR') {
+      if (state === 'PR' || (state && state !== 'AA')) {
         country = 'Puerto Rico';
       }
       
