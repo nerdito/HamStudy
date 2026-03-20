@@ -13,7 +13,7 @@ const LICENSE_NAMES = {
 }
 
 function Settings() {
-  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setColorScheme, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
+  const { settings, updateStudyQuestions, setQuickPractice, setQuickExam, setFontSize, setShowAnswer, setColorScheme, setTtsEnabled, setTtsSpeed, setTtsVoice, setTtsAutoRead, setListeningMode, setSrsEnabled, setTimerEnabled, setTimerWarningEnabled, clearSRSData, clearExamHistory, resetToDefaults, MAX_QUESTIONS, FONT_SIZES, buildNumber } = useSettings()
   const [voices, setVoices] = useState([])
 
   useEffect(() => {
@@ -121,6 +121,46 @@ function Settings() {
             <span className="toggle-slider"></span>
           </label>
         </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Exam Timer Settings</h2>
+        <p className="settings-description">
+          Enable a countdown timer during practice exams to simulate real exam conditions.
+          Time limits: Technician (7 min), General (7 min), Extra (12 min).
+        </p>
+        
+        <div className="toggle-group">
+          <label className="toggle-label">
+            <span>Enable Exam Timer</span>
+            <span className="toggle-description">Show countdown timer during practice exams</span>
+          </label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={settings.timerEnabled}
+              onChange={(e) => setTimerEnabled(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+
+        {settings.timerEnabled && (
+          <div className="toggle-group">
+            <label className="toggle-label">
+              <span>Timer Warning</span>
+              <span className="toggle-description">Show visual warning when time is running low</span>
+            </label>
+            <label className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={settings.timerWarningEnabled}
+                onChange={(e) => setTimerWarningEnabled(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+          </div>
+        )}
       </div>
 
       <div className="settings-section">

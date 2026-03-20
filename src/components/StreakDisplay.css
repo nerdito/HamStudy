@@ -1,0 +1,188 @@
+.streak-display {
+  background: linear-gradient(135deg, var(--gradient-primary));
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  color: white;
+}
+
+.streak-inactive {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.streak-inactive .streak-icon {
+  color: var(--text-secondary);
+}
+
+.streak-inactive .streak-info h3 {
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.streak-inactive .streak-info p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.streak-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.streak-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-icon {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.streak-icon.flame-animated {
+  animation: flame-pulse 1.5s ease-in-out infinite;
+}
+
+.streak-count {
+  position: absolute;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.streak-info h3 {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 1.25rem;
+}
+
+.streak-info p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.streak-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.streak-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.streak-stat .stat-icon {
+  color: white;
+  opacity: 0.9;
+}
+
+.streak-stat .stat-icon.trophy {
+  color: #fbbf24;
+}
+
+.streak-stat .stat-icon.target {
+  color: #34d399;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.streak-progress {
+  background: rgba(255, 255, 255, 0.15);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: var(--space-sm);
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.streak-milestones {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.streak-milestones h4 {
+  margin: 0 0 var(--space-md) 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.milestone-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.milestone-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+}
+
+.milestone-icon {
+  font-size: 1rem;
+}
+
+.milestone-title {
+  font-weight: 500;
+}
+
+@keyframes flame-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.7));
+  }
+}

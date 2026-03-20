@@ -72,6 +72,15 @@ export default defineConfig({
   ],
   base: '/HamStudy/',
   build: {
-    outDir: 'build'
+    outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
+          'icons': ['lucide-react']
+        }
+      }
+    }
   }
 })

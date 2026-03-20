@@ -80,7 +80,7 @@ function getFlagForCountry(country) {
 
 export async function lookupCallsign(callsign) {
   try {
-    const response = await fetch(`http://api.hamdb.org/v1/${encodeURIComponent(callsign.trim())}/json/hamdb`);
+    const response = await fetch(`https://api.hamdb.org/v1/${encodeURIComponent(callsign.trim())}/json/hamdb`);
     
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);

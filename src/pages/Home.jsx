@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../context/SettingsContext'
+import StreakDisplay from '../components/StreakDisplay'
 import logo from '../assets/logo.png'
-import { BookOpen, ClipboardList, Layers, Settings, TrendingUp } from 'lucide-react'
+import { BookOpen, ClipboardList, Layers, Settings, TrendingUp, Radio } from 'lucide-react'
 import './Home.css'
 
 const LICENSE_NAMES = {
@@ -54,11 +55,17 @@ function Home() {
           <Layers />
           Flashcards
         </Link>
+        <Link to="/morse-code" className="home-button">
+          <Radio />
+          Morse Code
+        </Link>
         <Link to="/settings" className="home-button">
           <Settings />
           Settings
         </Link>
       </div>
+
+      <StreakDisplay />
 
       {examHistory.length > 0 && (
         <div className="progress-section">

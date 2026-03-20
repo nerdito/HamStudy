@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import QuestionCard from './QuestionCard'
 import ExamResults from './ExamResults'
+import Timer from './Timer'
 import { useSettings } from '../context/SettingsContext'
+import { useStreak } from '../context/StreakContext'
 import { speakQuestionWithLetters, stop, startListening, stopListening } from '../utils/tts'
 import { ArrowLeft, ArrowRight, X } from 'lucide-react'
 import './Exam.css'
 
 function Exam({ questions: allQuestions, questionCount, mode, license, onBack }) {
   const { settings, getQuestionsDueForReview, updateSRSQuestion, isBookmarked, toggleBookmark } = useSettings()
+  const { recordActivity } = useStreak()
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -16,6 +19,7 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
   const [mustClickCorrect, setMustClickCorrect] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const autoAdvanceTimer = useRef(null)
+  const hasRecordedStreak = useRef(false)
 
   const isQuickMode = mode === 'study' ? settings.quickExam : settings.quickPractice
 
@@ -61,6 +65,19 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
       }
     }
   }, [currentIndex, questions, settings.ttsEnabled, settings.ttsAutoRead, settings.ttsSpeed, settings.ttsVoice])
+
+  useEffect(() => {
+    if (isComplete && mode === 'practice' && !hasRecordedStreak.current) {
+      recordActivity()
+      hasRecordedStreak.current = true
+    }
+  }, [isComplete, mode, recordActivity])
+
+  const handleTimeUp = useCallback(() => {
+    if (!isComplete && mode === 'practice' && settings.timerEnabled) {
+      setIsComplete(true)
+    }
+  }, [isComplete, mode, settings.timerEnabled])
 
   const advanceToNext = useCallback(() => {
     if (currentIndex < questionCount - 1) {
@@ -219,6 +236,14 @@ function Exam({ questions: allQuestions, questionCount, mode, license, onBack })
             {LICENSE_NAMES[license] || license}
           </span>
         </div>
+        {mode === 'practice' && settings.timerEnabled && (
+          <Timer 
+            key={license}
+            license={license}
+            onTimeUp={handleTimeUp}
+            isActive={!isComplete}
+          />
+        )}
         <span className="question-counter">
           Question {currentIndex + 1} of {questionCount}
         </span>

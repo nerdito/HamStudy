@@ -19,7 +19,9 @@ const DEFAULT_SETTINGS = {
   ttsVoice: '',
   ttsAutoRead: false,
   listeningMode: 'off',
-  srsEnabled: false
+  srsEnabled: false,
+  timerEnabled: false,
+  timerWarningEnabled: true
 }
 
 const MAX_QUESTIONS = {
@@ -158,6 +160,14 @@ export function SettingsProvider({ children }) {
 
   const setSrsEnabled = (value) => {
     setSettings(prev => ({ ...prev, srsEnabled: value }))
+  }
+
+  const setTimerEnabled = (value) => {
+    setSettings(prev => ({ ...prev, timerEnabled: value }))
+  }
+
+  const setTimerWarningEnabled = (value) => {
+    setSettings(prev => ({ ...prev, timerWarningEnabled: value }))
   }
 
   const saveExamResult = (result) => {
@@ -304,6 +314,8 @@ export function SettingsProvider({ children }) {
       setTtsAutoRead,
       setListeningMode,
       setSrsEnabled,
+      setTimerEnabled,
+      setTimerWarningEnabled,
       saveExamResult,
       updateSRSQuestion,
       getSRSQuestionPriority,

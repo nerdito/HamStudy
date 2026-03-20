@@ -1,0 +1,118 @@
+.hamburger-button {
+  position: fixed;
+  top: var(--space-md);
+  left: var(--space-md);
+  z-index: 1001;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+}
+
+.hamburger-button:hover {
+  background: var(--bg-tertiary);
+  transform: scale(1.05);
+}
+
+.hamburger-button:active {
+  transform: scale(0.95);
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn var(--transition-fast);
+}
+
+.navigation-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  max-width: 80vw;
+  height: 100vh;
+  background: var(--bg-secondary);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform var(--transition-normal);
+  box-shadow: var(--shadow-xl);
+  overflow-y: auto;
+}
+
+.navigation-menu.open {
+  transform: translateX(0);
+}
+
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.close-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.close-button:hover {
+  background: var(--bg-tertiary);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-md) 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.nav-link:hover {
+  background: var(--bg-tertiary);
+}
+
+.nav-link.active {
+  background: var(--button-primary);
+  color: white;
+}
+
+.nav-link.active:hover {
+  background: var(--button-hover);
+}
